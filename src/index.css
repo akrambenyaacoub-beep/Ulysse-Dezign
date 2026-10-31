@@ -1,0 +1,1044 @@
+/* ============================================================ */
+/*  1. IMPORTS & CONFIGURATION TAILWIND
+/* ============================================================ */
+
+/* ✅ CORRECTION : Utiliser les directives @tailwind pour Tailwind 3 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================ */
+/*  2. STYLES DE BASE
+/* ============================================================ */
+
+body {
+  background-color: #0A1628;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  background-color: #0A1628;
+}
+
+/* ============================================================ */
+/*  3. ANIMATIONS DE BASE
+/* ============================================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ring {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg); }
+  50% { transform: rotate(-15deg); }
+  75% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes notificationSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes dragPulse {
+  0%, 100% {
+    transform: scale(1);
+    border-style: dashed;
+  }
+  50% {
+    transform: scale(1.02);
+    border-style: dashed;
+  }
+}
+
+@keyframes dropBounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.04); }
+  60% { transform: scale(0.98); }
+  100% { transform: scale(1); }
+}
+
+@keyframes grabHint {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+@keyframes pulse-gold {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(240, 199, 94, 0.4);
+    border-color: #F0C75E;
+  }
+  50% {
+    box-shadow: 0 0 15px 4px rgba(240, 199, 94, 0.2);
+    border-color: #d4aa3a;
+  }
+}
+
+@keyframes pulse-red {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 15px 4px rgba(239, 68, 68, 0.2);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pulse-urgent {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 20px 8px rgba(239, 68, 68, 0.3);
+  }
+}
+
+@keyframes emojiPickerIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================================ */
+/*  4. CLASSES D'ANIMATION
+/* ============================================================ */
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-pulse {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.3s ease-out forwards;
+}
+
+.animate-slideInDown {
+  animation: slideInDown 0.3s ease-out forwards;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.3s ease-out forwards;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(240, 199, 94, 0.1) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.2s ease-out forwards;
+}
+
+.notification-ring {
+  animation: ring 0.5s ease-in-out 2;
+}
+
+.notification-enter {
+  animation: notificationSlideIn 0.3s ease-out forwards;
+}
+
+.emoji-picker-open {
+  animation: emojiPickerIn 0.15s ease-out forwards;
+}
+
+/* ============================================================ */
+/*  5. ANIMATIONS KANBAN
+/* ============================================================ */
+
+.animate-pulse-gold {
+  animation: pulse-gold 1.5s ease-in-out infinite;
+}
+
+.animate-pulse-red {
+  animation: pulse-red 1.5s ease-in-out infinite;
+}
+
+.animate-pulse-urgent {
+  animation: pulse-urgent 1s ease-in-out infinite;
+}
+
+.animate-drag-pulse {
+  animation: dragPulse 1.5s ease-in-out infinite;
+}
+
+.animate-drop-bounce {
+  animation: dropBounce 0.4s ease-out forwards;
+}
+
+.animate-grab-hint {
+  animation: grabHint 1.5s ease-in-out infinite;
+}
+
+/* ============================================================ */
+/*  6. SCROLLBAR PERSONNALISÉE
+/* ============================================================ */
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #0D1F3C;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #F0C75E;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #d4aa3a;
+}
+
+.custom-scrollbar::-webkit-scrollbar:horizontal {
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track:horizontal {
+  background: #0D1F3C;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:horizontal {
+  background: #F0C75E;
+  border-radius: 10px;
+}
+
+/* ============================================================ */
+/*  7. KANBAN - DRAG & DROP
+/* ============================================================ */
+
+.kanban-container {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+.kanban-container input,
+.kanban-container textarea,
+.kanban-container select,
+.kanban-container [contenteditable="true"] {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+
+.kanban-task {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  cursor: grab !important;
+  touch-action: manipulation;
+}
+
+.kanban-task:active {
+  cursor: grabbing !important;
+}
+
+.kanban-task.no-drag {
+  cursor: default !important;
+}
+
+.kanban-task.no-drag:active {
+  cursor: default !important;
+}
+
+.kanban-task img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
+}
+
+.kanban-column-drop-active {
+  border-style: dashed !important;
+  border-width: 2px !important;
+  animation: dragPulse 1.5s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.kanban-task-drag-over {
+  border-color: #F0C75E !important;
+  box-shadow: 0 0 20px rgba(240, 199, 94, 0.3) !important;
+  transform: scale(1.02) !important;
+  background-color: #0F1F3A !important;
+  transition: all 0.2s ease;
+}
+
+.kanban-task-dragging {
+  opacity: 0.3 !important;
+  transform: rotate(3deg) scale(0.95) !important;
+  border: 2px dashed rgba(240, 199, 94, 0.5) !important;
+  transition: all 0.2s ease;
+}
+
+.kanban-empty-drop-zone {
+  min-height: 60px;
+  border: 2px dashed transparent;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kanban-empty-drop-zone.active {
+  border-color: rgba(240, 199, 94, 0.5);
+  background-color: rgba(240, 199, 94, 0.05);
+  animation: dragPulse 1.5s ease-in-out infinite;
+}
+
+/* ============================================================ */
+/*  8. MODE CLAIR (LIGHT MODE)
+/* ============================================================ */
+
+.light {
+  --clr-bg: #faf7f2;
+  --clr-surface: #ffffff;
+  --clr-card: #ffffff;
+  --clr-input: #f5f0e8;
+  --clr-border: #e5ddd0;
+  --clr-text: #2c2416;
+  --clr-text-secondary: #6b5e4a;
+  --clr-text-muted: #9b8c7a;
+  --clr-gold: #9b7422;
+  --clr-gold-light: #f5e6c8;
+  --clr-sidebar: #f5f0e8;
+  --clr-hover: #efe8db;
+  --clr-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.light body,
+.light #root {
+  background: var(--clr-bg) !important;
+  color: var(--clr-text) !important;
+}
+
+.light .from-\[\#0a1a3a\],
+.light .via-\[\#0d1f3c\],
+.light .to-\[\#0a1628\] {
+  background: var(--clr-bg) !important;
+}
+
+.light aside {
+  background: var(--clr-sidebar) !important;
+  border-right: 1px solid var(--clr-border) !important;
+}
+
+.light .bg-\[\#0D1F3C\],
+.light .bg-\[\#0D1F3C\]\/80,
+.light .bg-\[\#0D1F3C\]\/95,
+.light .bg-\[\#0D1F3C\]\/30 {
+  background: var(--clr-card) !important;
+  border-color: var(--clr-border) !important;
+  box-shadow: var(--clr-shadow) !important;
+}
+
+.light .bg-\[\#0A1628\] {
+  background: var(--clr-card) !important;
+}
+
+.light .bg-\[\#071325\] {
+  background: var(--clr-input) !important;
+  border-color: var(--clr-border) !important;
+}
+
+.light .border-\[\#1A3A6B\] {
+  border-color: var(--clr-border) !important;
+}
+
+.light .border-\[\#1A3A6B\]\/50 {
+  border-color: rgba(229, 221, 208, 0.7) !important;
+}
+
+.light .divide-\[\#1A3A6B\] > * {
+  border-color: var(--clr-border) !important;
+}
+
+.light .border-b-\[\#1A3A6B\] {
+  border-color: var(--clr-border) !important;
+}
+
+.light .border-t-\[\#1A3A6B\] {
+  border-color: var(--clr-border) !important;
+}
+
+.light .text-white {
+  color: var(--clr-text) !important;
+}
+
+.light .text-gray-200,
+.light .text-gray-300 {
+  color: var(--clr-text) !important;
+}
+
+.light .text-gray-400 {
+  color: var(--clr-text-secondary) !important;
+}
+
+.light .text-gray-500 {
+  color: var(--clr-text-muted) !important;
+}
+
+.light .text-\[\#F0C75E\] {
+  color: var(--clr-gold) !important;
+}
+
+.light .border-\[\#F0C75E\]\/20 {
+  border-color: rgba(155, 116, 34, 0.2) !important;
+}
+
+.light .border-\[\#F0C75E\]\/30 {
+  border-color: rgba(155, 116, 34, 0.3) !important;
+}
+
+.light input,
+.light select,
+.light textarea {
+  background: var(--clr-input) !important;
+  border-color: var(--clr-border) !important;
+  color: var(--clr-text) !important;
+}
+
+.light input::placeholder,
+.light textarea::placeholder {
+  color: var(--clr-text-muted) !important;
+}
+
+.light input:focus,
+.light select:focus,
+.light textarea:focus {
+  border-color: var(--clr-gold) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(155, 116, 34, 0.1) !important;
+}
+
+.light thead {
+  background: var(--clr-input) !important;
+}
+
+.light tbody tr:hover {
+  background: var(--clr-hover) !important;
+}
+
+.light th {
+  color: var(--clr-text-secondary) !important;
+}
+
+.light .bg-\[\#1A3A6B\] {
+  background: var(--clr-hover) !important;
+  color: var(--clr-text) !important;
+}
+
+.light .bg-\[\#1A3A6B\]\/30 {
+  background: var(--clr-hover) !important;
+}
+
+.light .hover\:bg-\[\#1A3A6B\]:hover {
+  background: var(--clr-border) !important;
+}
+
+.light .hover\:bg-\[\#2A4A6B\]:hover {
+  background: var(--clr-border) !important;
+}
+
+.light .bg-\[\#F0C75E\] {
+  background: var(--clr-gold) !important;
+  color: #ffffff !important;
+}
+
+.light .bg-gradient-to-r.from-\[\#F0C75E\].to-\[\#d4aa3a\] {
+  background: linear-gradient(135deg, var(--clr-gold), #7a5a1a) !important;
+  color: #ffffff !important;
+}
+
+.light .hover\:bg-\[\#d4aa3a\]:hover {
+  background: #7a5a1a !important;
+}
+
+.light .bg-yellow-500\/5 { background: #fefce8 !important; }
+.light .bg-blue-500\/5 { background: #eff6ff !important; }
+.light .bg-purple-500\/5 { background: #faf5ff !important; }
+.light .bg-green-500\/5 { background: #f0fdf4 !important; }
+.light .bg-red-500\/5 { background: #fef2f2 !important; }
+
+.light .from-blue-950,
+.light .via-blue-900\/30,
+.light .from-red-950,
+.light .via-red-900\/50,
+.light .from-orange-950,
+.light .via-orange-900\/30,
+.light .from-gray-900,
+.light .via-gray-800\/30 {
+  background: var(--clr-card) !important;
+  border: 1px solid var(--clr-border) !important;
+  box-shadow: var(--clr-shadow) !important;
+}
+
+.light .to-\[\#0A1628\] {
+  background: transparent !important;
+}
+
+.light header {
+  background: var(--clr-card) !important;
+  border-color: var(--clr-border) !important;
+}
+
+.light .max-w-5xl {
+  background: var(--clr-card) !important;
+}
+
+.light .bg-red-500\/20 { background: #fef2f2 !important; }
+.light .bg-blue-500\/20 { background: #eff6ff !important; }
+.light .bg-green-500\/20 { background: #f0fdf4 !important; }
+.light .bg-yellow-500\/20 { background: #fefce8 !important; }
+.light .bg-purple-500\/20 { background: #faf5ff !important; }
+.light .bg-orange-500\/20 { background: #fff7ed !important; }
+
+.light .hover\:border-\[\#F0C75E\]\/30:hover {
+  border-color: rgba(155, 116, 34, 0.4) !important;
+}
+
+.light .hover\:border-\[\#F0C75E\]\/40:hover {
+  border-color: rgba(155, 116, 34, 0.5) !important;
+}
+
+.light .hover\:border-\[\#F0C75E\]\/50:hover {
+  border-color: rgba(155, 116, 34, 0.6) !important;
+}
+
+.light .bg-red-500\/15 { background: #fef2f2 !important; }
+.light .bg-\[\#F0C75E\]\/15 { background: var(--clr-gold-light) !important; }
+.light .bg-white\/5 { background: var(--clr-input) !important; }
+
+.light .ring-1 { --tw-ring-color: var(--clr-border) !important; }
+.light .ring-2 { --tw-ring-color: var(--clr-border) !important; }
+.light .ring-white\/10 { --tw-ring-color: var(--clr-border) !important; }
+.light .ring-white\/5 { --tw-ring-color: var(--clr-border) !important; }
+
+.light * {
+  transition: background-color 0.25s ease, 
+              border-color 0.25s ease, 
+              color 0.25s ease,
+              box-shadow 0.25s ease;
+}
+
+/* ============================================================ */
+/*  9. STYLES POUR LES EMOJIS
+/* ============================================================ */
+
+.chat-message-text {
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Twemoji Mozilla', sans-serif;
+  line-height: 1.6;
+}
+
+.chat-message-text .emoji {
+  font-size: 1.2em;
+  display: inline-block;
+}
+
+.emoji-picker-emoji {
+  font-size: 1.8rem;
+  transition: transform 0.15s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.emoji-picker-emoji:hover {
+  transform: scale(1.3);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.emoji-input {
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+}
+
+.emoji-safe {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.emoji-picker-category {
+  display: flex;
+  gap: 4px;
+  padding: 4px 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.emoji-picker-category::-webkit-scrollbar {
+  display: none;
+}
+
+.emoji-picker-category button {
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 18px;
+}
+
+.emoji-picker-category button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.emoji-picker-category button.active {
+  background: #F0C75E;
+  color: #071325;
+}
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 2px;
+  padding: 4px;
+}
+
+.emoji-grid button {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 24px;
+  border-radius: 8px;
+  transition: all 0.15s;
+  padding: 4px;
+}
+
+.emoji-grid button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: scale(1.2);
+}
+
+/* ============================================================ */
+/*  10. STYLES POUR LE CHAT
+/* ============================================================ */
+
+.chat-message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chat-message-bubble {
+  position: relative;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.chat-message-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  padding: 0 4px;
+  margin-bottom: 2px;
+}
+
+.chat-message-body {
+  padding: 8px 14px;
+  border-radius: 16px;
+  line-height: 1.5;
+}
+
+.chat-message-mine {
+  background: linear-gradient(135deg, #F0C75E, #d4aa3a);
+  color: #071325;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-message-other {
+  background: #0D1F3C;
+  border: 1px solid #1A3A6B;
+  color: #e5e7eb;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.chat-role-badge {
+  font-size: 0.55rem;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.chat-time {
+  font-size: 0.55rem;
+  color: #6b7280;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.chat-read-receipt {
+  font-size: 0.55rem;
+  color: rgba(7, 19, 37, 0.5);
+  text-align: right;
+  margin-top: 2px;
+}
+
+.chat-actions {
+  display: flex;
+  gap: 2px;
+  margin-top: 2px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.chat-message-container:hover .chat-actions {
+  opacity: 1;
+}
+
+.chat-action-btn {
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: transparent;
+  color: #6b7280;
+  font-size: 0.7rem;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.chat-action-btn:hover {
+  background: #1A3A6B;
+  color: white;
+}
+
+.chat-action-btn:hover.text-blue-400 {
+  color: #60a5fa;
+}
+
+.chat-action-btn:hover.text-red-400 {
+  color: #f87171;
+}
+
+/* ============================================================ */
+/*  11. TRANSITIONS UTILES
+/* ============================================================ */
+
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-bounce {
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.transition-fast {
+  transition: all 0.15s ease;
+}
+
+/* ============================================================ */
+/*  12. EFFETS DE VERRE (GLASSMORPHISM)
+/* ============================================================ */
+
+.glass {
+  background: rgba(13, 31, 60, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(26, 58, 107, 0.5);
+}
+
+.glass-light {
+  background: rgba(13, 31, 60, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(26, 58, 107, 0.3);
+}
+
+/* ============================================================ */
+/*  13. OMBRES PERSONNALISÉES
+/* ============================================================ */
+
+.shadow-gold {
+  box-shadow: 0 4px 20px rgba(240, 199, 94, 0.2);
+}
+
+.shadow-gold-lg {
+  box-shadow: 0 8px 30px rgba(240, 199, 94, 0.3);
+}
+
+.shadow-blue {
+  box-shadow: 0 4px 20px rgba(19, 89, 169, 0.2);
+}
+
+/* ============================================================ */
+/*  14. HOVER EFFECTS
+/* ============================================================ */
+
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 15px rgba(240, 199, 94, 0.3);
+}
+
+/* ============================================================ */
+/*  15. RESPONSIVE UTILITIES
+/* ============================================================ */
+
+@media (max-width: 768px) {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* ============================================================ */
+/*  16. IMPRESSION
+/* ============================================================ */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* ============================================================ */
+/*  17. STYLES POUR LES INPUTS NUMBER
+/* ============================================================ */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ============================================================ */
+/*  18. STYLES POUR LA GALERIE
+/* ============================================================ */
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.image-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.card-transition {
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.project-modal-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.project-modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.project-modal-content::-webkit-scrollbar-thumb {
+  background: #F0C75E;
+  border-radius: 2px;
+}
+/* ✅ Effet Glass - Forcé */
+.glass-effect {
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  background: rgba(13, 31, 60, 0.7) !important;
+}
+
+.light .glass-effect {
+  background: rgba(255, 255, 255, 0.7) !important;
+}

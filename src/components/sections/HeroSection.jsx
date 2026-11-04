@@ -10,13 +10,13 @@ const HeroSection = ({ scrollTo }) => {
       
       {/* --- FOND ET EFFETS LUMINEUX --- */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 animate-slow-zoom"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 animate-slow-zoom opacity-500"
         style={{
           backgroundImage: `url(${backgroundImage})`,
         }}
       >
         {/* Voile sombre pour la lisibilité du texte */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0D1F3C]/95 via-[#0D1F3C]/80 to-[#0D1F3C]/40"></div>
+         <div className="absolute inset-0 bg-gradient-to-r from-[#0D1F3C]/80 via-[#0D1F3C]/10 to-[#0D1F3C]/50"></div>
         
         {/* Halo lumineux en arrière-plan */}
         <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-[#F0C75E]/10 rounded-full blur-[120px] animate-pulse-slow mix-blend-screen"></div>

@@ -1,10 +1,10 @@
 // src/components/sections/CategoriesSection.jsx
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import stickersImg from '../../assets/stickers.webp';
-import uvImg from '../../assets/UV.jpg';
+import stickersImg from '../../assets/stickers.jpg';
+import uvImg from '../../assets/uv.webp';
 import grfImg from '../../assets/grandformat.jpg';
-import pckImg from '../../assets/packaging.jpg';
+import pckImg from '../../assets/packaging.webp';
 
 
 

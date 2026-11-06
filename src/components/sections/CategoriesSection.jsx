@@ -5,8 +5,8 @@ import stickersImg from '../../assets/stickers.jpg';
 import uvImg from '../../assets/uv.webp';
 import grfImg from '../../assets/grandformat.jpg';
 import pckImg from '../../assets/packaging.webp';
-
-
+// 👇 1. On importe la nouvelle image de fond
+import bgImage from '../../assets/background website 02.jpg'; 
 
 const CATEGORIES = [
   { id: 'stickers', num: '01', title: 'Stickers & Découpes', icon: 'content_cut', image: stickersImg, link: '/boutique?categorie=stickers' },
@@ -21,10 +21,23 @@ const CategoriesSection = () => {
   return (
     <section className="py-20 md:py-32 relative overflow-hidden bg-[#071325]" id="categories">
       
-      {/* --- BACKGROUND PRO GOLD & BLUE --- */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#071325] via-[#0D1F3C] to-[#0A1628]"></div>
+      {/* --- BACKGROUND AVEC L'IMAGE PERSONNALISÉE --- */}
+      
+      {/* 1. L'image de fond avec une opacité réduite pour ne pas écraser le texte */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 animate-slow-zoom opacity-500"
+        style={{
+          backgroundImage: `url(${bgImage})`,
+        }}
+      ></div>
+      
+      {/* 2. Un voile de dégradé par-dessus l'image pour garantir la lisibilité (Gold & Blue) */}
+         <div className="absolute inset-0 bg-gradient-to-r from-[#0D1F3C]/80 via-[#0D1F3C]/10 to-[#0D1F3C]/50"></div>
+
+      {/* 3. Les halos lumineux (Effet Premium) */}
       <div className="absolute top-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-[#F0C75E]/10 rounded-full blur-[80px] md:blur-[120px] mix-blend-screen pointer-events-none"></div>
       <div className="absolute bottom-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-[#1E7AC4]/10 rounded-full blur-[80px] md:blur-[100px] mix-blend-screen pointer-events-none"></div>
+      
       
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 relative z-10">
         
@@ -135,7 +148,7 @@ const CategoriesSection = () => {
                   </Link>
                 </div>
 
-                {/* LA FLÈCHE INDICATRICE (Uniquement sur toutes les cartes SAUF la dernière) */}
+                {/* LA FLÈCHE INDICATRICE */}
                 {index < CATEGORIES.length - 1 && (
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20 pointer-events-none">
                     <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.3)] animate-slide-hint">

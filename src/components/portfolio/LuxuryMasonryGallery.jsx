@@ -1,12 +1,14 @@
 // src/components/portfolio/LuxuryMasonryGallery.jsx
 import { useState, useEffect } from 'react';
 
+
+
 // =====================================================
 // 1. DONNÉES DES PROJETS
 // =====================================================
 const PROJECTS = [
   // --- STICKERS ---
-  { id: 1, title: "Stickers Vinyle Floral", category: "Stickers", client: "Maison Fleurie", image: "https://images.unsplash.com/photo-1572375992501-4b0892d50c69?w=600&q=80", description: "Stickers vinyles découpés à la main.", size: "tall" },
+  { id: 1, title: "Stickers Vinyle Floral", category: "Stickers", client: "Maison Fleurie", image: "https://images.unsplash.com/photo-1572375992501-4b0892d50c69?w=600&q=80", description: "Stickers vinyles découpés à la main.", size: "pano" },
   { id: 2, title: "Stickers Holographiques", category: "Stickers", client: "Cosmetics Lab", image: "https://images.unsplash.com/photo-1620168341738-67d8a58b9b80?w=600&q=80", description: "Stickers 3D holographiques.", size: "square" },
   { id: 3, title: "Stickers Logo Entreprise", category: "Stickers", client: "Tech Corp", image: "https://images.unsplash.com/photo-1558655146-d09347e92766?w=600&q=80", description: "Stickers de logos personnalisés.", size: "square" },
   { id: 4, title: "Stickers Ronds", category: "Stickers", client: "Boulangerie Bio", image: "https://images.unsplash.com/photo-1607082349566-187342175e2f?w=600&q=80", description: "Stickers de scellés pour pains.", size: "tall" },
@@ -38,10 +40,16 @@ const MAIN_CATEGORIES = [
 // 2. COMPOSANT CARTE PROJET
 // =====================================================
 const ProjectCard = ({ project, onClick }) => {
-  const aspectClass = project.size === 'tall' ? 'aspect-[3/4]' : 'aspect-square';
+  // On ajoute la logique pour gérer plusieurs tailles
+  let aspectClass = 'aspect-square'; // Par défaut
+  
+  if (project.size === 'tall') aspectClass = 'aspect-[3/4]';
+  else if (project.size === 'wide') aspectClass = 'aspect-video';
+  else if (project.size === 'portrait') aspectClass = 'aspect-[4/5]';
+  else if (project.size === 'pano') aspectClass = 'aspect-[51/9]';
 
   return (
-    <div 
+   <div 
       className={`group relative ${aspectClass} rounded-[1.5rem] overflow-hidden shadow-sm hover:shadow-2xl cursor-pointer bg-[#f5f4f0] transition-all duration-700 hover:-translate-y-2`} 
       onClick={() => onClick(project)}
     >

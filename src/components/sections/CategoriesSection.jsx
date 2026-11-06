@@ -1,12 +1,18 @@
 // src/components/sections/CategoriesSection.jsx
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import stickersImg from '../../assets/stickers.webp';
+import uvImg from '../../assets/UV.jpg';
+import grfImg from '../../assets/grandformat.jpg';
+import pckImg from '../../assets/packaging.jpg';
+
+
 
 const CATEGORIES = [
-  { id: 'stickers', num: '01', title: 'Stickers & Découpes', icon: 'content_cut', image: 'https://images.unsplash.com/photo-1572375992501-4b0892d50c69?w=1000&q=80', link: '/boutique?categorie=stickers' },
-  { id: 'uv', num: '02', title: 'Impression UV HD', icon: 'high_quality', image: 'https://images.unsplash.com/photo-1576836165612-8bc9b07e7778?w=1000&q=80', link: '/boutique?categorie=impression' },
-  { id: 'grand-format', num: '03', title: 'Grand Format & Vinyles', icon: 'wallpaper', image: 'https://yangraph.ma/wp-content/uploads/2026/06/baches-usages-facade-chantier-casablanca.webp', link: '/boutique?categorie=grand-format' },
-  { id: 'packaging', num: '04', title: 'Packaging sur Mesure', icon: 'inventory_2', image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=1000&q=80', link: '/boutique?categorie=packaging' }
+  { id: 'stickers', num: '01', title: 'Stickers & Découpes', icon: 'content_cut', image: stickersImg, link: '/boutique?categorie=stickers' },
+  { id: 'uv', num: '02', title: 'Impression UV HD', icon: 'high_quality', image: uvImg, link: '/boutique?categorie=impression' },
+  { id: 'grand-format', num: '03', title: 'Grand Format & Vinyles', icon: 'wallpaper', image: grfImg, link: '/boutique?categorie=grand-format' },
+  { id: 'packaging', num: '04', title: 'Packaging sur Mesure', icon: 'inventory_2', image: pckImg, link: '/boutique?categorie=packaging' }
 ];
 
 const CategoriesSection = () => {

@@ -36,7 +36,7 @@ const HeroSection = ({ scrollTo }) => {
       <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-12 grid md:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10 w-full">
         
         {/* --- PARTIE GAUCHE : LE TEXTE --- */}
-        <div className="space-y-6 md:space-y-8 text-center md:text-left animate-slide-right">
+        <div className="space-y-6 md:space-y-8 text-center md:text-center animate-slide-right">
           <div className="inline-flex items-center gap-2.5 mx-auto md:mx-0 px-5 py-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 shadow-[0_0_20px_rgba(240,199,94,0.15)]">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F0C75E] opacity-75"></span>
@@ -47,12 +47,9 @@ const HeroSection = ({ scrollTo }) => {
             </span>
           </div>
           
-          <h1 className="font-['Playfair_Display'] text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] text-white leading-[1.1] font-bold tracking-tight drop-shadow-lg">
-            L'Excellence<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F0C75E] via-[#fce8aa] to-[#d4aa3a]">
-              de l'Impression
-            </span>
-          </h1>
+          <h1 className="font-['Playfair_Display'] text-4xl sm:text-5xl md:text-6xl font-bold max-w-2xl mx-auto md:mx-0 text-white">
+  L'Excellence de <span className="text-[#F0C75E]">l'Impression</span>
+</h1>
           
           <p className="text-lg sm:text-xl md:text-2xl text-white/90 font-['Playfair_Display'] italic font-light max-w-lg mx-auto md:mx-0">
             "Plus qu'une imprimerie, une expérience."

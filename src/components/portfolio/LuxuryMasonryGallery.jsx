@@ -1,5 +1,6 @@
 // src/components/portfolio/LuxuryMasonryGallery.jsx
 import { useState, useEffect } from 'react';
+import SectionHeader from '../ui/SectionHeader';
 
 
 
@@ -149,21 +150,13 @@ const LuxuryMasonryGallery = () => {
         {!activeCategory && (
           <div className="animate-fadeIn">
             
-            {/* NOUVEL EN-TÊTE ALIGNÉ À GAUCHE (Style CategoriesSection) */}
-            <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 sm:mb-16">
-              <div className="text-center md:text-left">
-                <div className="flex items-center justify-center md:justify-start gap-3 mb-3">
-                  <span className="w-8 h-px bg-[#F0C75E]"></span>
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#F0C75E] font-bold font-['Montserrat']">Explorer</span>
-                </div>
-                <h2 className="font-['Playfair_Display'] text-4xl sm:text-5xl md:text-6xl text-[#0D1F3C] font-bold tracking-tight">
-                  Nos Réalisations
-                </h2>
-                <p className="text-[#4A6A8A] mt-3 font-['Montserrat'] font-light max-w-lg text-sm sm:text-base mx-auto md:mx-0">
-                  Cliquez sur une catégorie pour plonger dans notre univers créatif.
-                </p>
-              </div>
-            </div>
+            <SectionHeader
+  eyebrow="Explorer"
+  title="Nos"
+  highlight="Réalisations"
+  description="Cliquez sur une catégorie pour plonger dans notre univers créatif."
+  light
+/>
 
             {/* Les 4 blocs catégories */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">

@@ -1,5 +1,6 @@
 // src/components/sections/ContactSection.jsx
 import { useState } from 'react';
+import SectionHeader from '../ui/SectionHeader';
 
 const whatsappNumber = "21699477391";
 
@@ -86,8 +87,7 @@ ${clientInfo.notes || 'Aucune'}
   };
 
   return (
-    <section className="py-24 sm:py-32 relative overflow-hidden bg-[#071325]" id="contact">
-      
+<section className="py-20 md:py-28 relative overflow-hidden bg-[#071325]" id="contact">      
       {/* --- DÉCORATIONS DE FOND HOMOGÈNES --- */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#071325] via-[#0D1F3C] to-[#0A1628]"></div>
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F0C75E]/10 rounded-full blur-[120px] mix-blend-screen pointer-events-none"></div>
@@ -96,18 +96,12 @@ ${clientInfo.notes || 'Aucune'}
       <div className="max-w-[1000px] mx-auto px-4 sm:px-6 md:px-12 relative z-10">
         
         {/* --- EN-TÊTE --- */}
-        <div className="text-center md:text-left mb-12">
-          <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
-            <span className="w-8 md:w-12 h-px bg-[#F0C75E]"></span>
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#F0C75E] font-bold font-['Montserrat']">Prêt à commander ?</span>
-          </div>
-          <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl md:text-5xl text-white font-bold tracking-tight leading-tight">
-            Lançons votre <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F0C75E] via-[#fce8aa] to-[#d4aa3a]">Projet</span>
-          </h2>
-          <p className="text-sm sm:text-base text-white/60 mt-4 font-['Montserrat'] font-light max-w-xl mx-auto md:mx-0">
-            Remplissez ce formulaire et notre équipe vous répondra immédiatement sur WhatsApp pour établir votre devis.
-          </p>
-        </div>
+        <SectionHeader
+  eyebrow="Prêt à commander ?"
+  title="Lançons votre"
+  highlight="Projet"
+  description="Remplissez ce formulaire et notre équipe vous répondra immédiatement sur WhatsApp pour établir votre devis."
+/>
 
         {/* --- FORMULAIRE "GLASSMORPHISM" --- */}
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 sm:p-10 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]">

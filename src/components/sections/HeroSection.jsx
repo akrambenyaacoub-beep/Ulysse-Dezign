@@ -47,8 +47,11 @@ const HeroSection = ({ scrollTo }) => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 animate-slow-zoom"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0D1F3C]/90 via-[#0D1F3C]/70 to-[#0D1F3C]/40"></div>
-        <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-[#F0C75E]/10 rounded-full blur-[120px] animate-pulse-slow mix-blend-screen"></div>
+        {/* 👇 OPACITÉ RÉDUITE ICI (de 90/70/40 à 50/20/10) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0D1F3C]/50 via-[#0D1F3C]/20 to-[#0D1F3C]/10"></div>
+        
+        {/* Halo lumineux (on le garde mais plus discret) */}
+        <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-[#F0C75E]/5 rounded-full blur-[120px] animate-pulse-slow mix-blend-screen"></div>
       </div>
 
       <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-12 grid md:grid-cols-2 gap-6 md:gap-12 lg:gap-16 items-center relative z-10 w-full pt-10 pb-20">
@@ -157,7 +160,7 @@ const HeroSection = ({ scrollTo }) => {
                 ))}
               </div>
 
-              {/* 👇 FLÈCHES DE NAVIGATION (Gauche / Droite) */}
+              {/* FLÈCHES DE NAVIGATION (Gauche / Droite) */}
               {activeIndex > 0 && (
                 <button 
                   onClick={() => scrollCarousel('left')}

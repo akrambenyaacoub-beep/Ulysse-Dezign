@@ -8,7 +8,7 @@ import Footer from '../components/layout/Footer';
 import HeroSection from '../components/sections/HeroSection';
 import StatsSection from '../components/sections/StatsSection';
 import CategoriesSection from '../components/sections/CategoriesSection';
-import ProductsSection from '../components/sections/ProductsSection';
+// 👇 ProductsSection a été retirée des imports
 import ContactSection from '../components/sections/ContactSection';
 import LuxuryMasonryGallery from '../components/portfolio/LuxuryMasonryGallery';
 
@@ -46,18 +46,13 @@ const LandingPage = () => {
   const scrollTo = useCallback((id) => {
     const element = document.getElementById(id);
     if (element) {
-      // On scroll dans le conteneur .snap-container
-      const container = document.querySelector('.snap-container');
-      if (container) {
-        const headerHeight = 80;
-        const elementPosition = element.offsetTop;
-        container.scrollTo({ top: elementPosition - headerHeight, behavior: 'smooth' });
-      }
+      const headerHeight = document.querySelector('header')?.offsetHeight || 80;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({ top: elementPosition - headerHeight - 20, behavior: 'smooth' });
     }
   }, []);
 
   useEffect(() => {
-    // On écoute le scroll sur le conteneur, pas sur la fenêtre
     const container = document.querySelector('.snap-container');
     const handleScroll = () => {
       if (container) setShowScrollTop(container.scrollTop > 500);
@@ -80,10 +75,9 @@ const LandingPage = () => {
       
       <Navbar scrollTo={scrollTo} />
 
-      {/* 👇 CONTENEUR PRINCIPAL AVEC LA CLASSE .snap-container (définie dans index.css) */}
       <div className="snap-container">
         
-        {/* 1. HERO */}
+        {/* 1. HERO (Avec les 4 cartes produits swipables) */}
         <div className="snap-section w-full">
           <HeroSection scrollTo={scrollTo} />
         </div>
@@ -93,17 +87,14 @@ const LandingPage = () => {
           <CategoriesSection />
         </div>
 
-        {/* 3. PRODUITS */}
-        <div className="snap-section w-full">
-          <ProductsSection />
-        </div>
+        {/* 👇 LA SECTION PRODUITS A ÉTÉ SUPPRIMÉE ICI */}
 
-        {/* 4. PORTFOLIO */}
+        {/* 3. PORTFOLIO */}
         <div className="snap-section w-full" id="portfolio">
           <LuxuryMasonryGallery />
         </div>
 
-        {/* 5. SERVICES */}
+        {/* 4. SERVICES */}
         <div className="snap-section w-full">
           <SectionWrapper id="services">
             <SectionHeader
@@ -140,7 +131,7 @@ const LandingPage = () => {
           </SectionWrapper>
         </div>
 
-        {/* 6. PROCESSUS */}
+        {/* 5. PROCESSUS */}
         <div className="snap-section w-full">
           <SectionWrapper>
             <SectionHeader
@@ -168,7 +159,7 @@ const LandingPage = () => {
           </SectionWrapper>
         </div>
 
-        {/* 7. AVIS */}
+        {/* 6. AVIS */}
         <div className="snap-section w-full">
           <SectionWrapper id="testimonials">
             <SectionHeader
@@ -214,7 +205,7 @@ const LandingPage = () => {
           </SectionWrapper>
         </div>
 
-        {/* 8. AVANTAGES (Fond blanc) */}
+        {/* 7. AVANTAGES */}
         <div className="snap-section w-full">
           <section className="py-20 md:py-28 bg-white h-full flex flex-col justify-center">
             <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 text-center">
@@ -236,7 +227,7 @@ const LandingPage = () => {
           </section>
         </div>
 
-        {/* 9. NEWSLETTER */}
+        {/* 8. NEWSLETTER */}
         <div className="snap-section w-full">
           <SectionWrapper>
             <SectionHeader
@@ -256,12 +247,12 @@ const LandingPage = () => {
           </SectionWrapper>
         </div>
 
-        {/* 10. STATS (Placé à la fin comme demandé) */}
+        {/* 9. STATS */}
         <div className="snap-section w-full">
           <StatsSection />
         </div>
 
-        {/* 11. CONTACT */}
+        {/* 10. CONTACT */}
         <div className="snap-section w-full">
           <ContactSection />
         </div>

@@ -27,12 +27,13 @@ const CategoriesSection = () => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat w-full h-full scale-105 animate-slow-zoom"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0D1F3C]/80 via-[#0D1F3C]/10 to-[#0D1F3C]/50"></div>
+        {/* 👇 OPACITÉ RÉDUITE ICI (identique au Hero) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0D1F3C]/50 via-[#0D1F3C]/20 to-[#0D1F3C]/10"></div>
       </div>
 
-      {/* Halos de lumière */}
-      <div className="absolute top-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-[#F0C75E]/10 rounded-full blur-[80px] md:blur-[120px] mix-blend-screen pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-[#1E7AC4]/10 rounded-full blur-[80px] md:blur-[100px] mix-blend-screen pointer-events-none" />
+      {/* Halos de lumière (Réduits pour plus de transparence) */}
+      <div className="absolute top-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-[#F0C75E]/5 rounded-full blur-[80px] md:blur-[120px] mix-blend-screen pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-[#1E7AC4]/5 rounded-full blur-[80px] md:blur-[100px] mix-blend-screen pointer-events-none" />
 
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 relative z-10 w-full flex flex-col h-full">
         
@@ -43,16 +44,14 @@ const CategoriesSection = () => {
         />
 
         {/* === VUE DESKTOP (PC) === */}
-        {/* flex-1 permet de prendre tout l'espace restant sous le titre */}
         <div className="hidden lg:flex flex-row gap-16 items-stretch flex-1 pb-8">
           
-          {/* Liste Gauche (Chaque ligne prend une hauteur égale pour remplir l'espace) */}
+          {/* Liste Gauche */}
           <div className="w-1/2 flex flex-col justify-between">
             {CATEGORIES.map((cat, index) => (
               <div
                 key={cat.id}
                 onMouseEnter={() => setActiveIndex(index)}
-                // flex-1 pour que chaque catégorie prenne 1/4 de la hauteur
                 className={`group border-b border-white/10 flex-1 flex items-center cursor-pointer transition-all duration-500 relative ${activeIndex === index ? 'pl-6' : 'pl-0'}`}
               >
                 <div className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#fce8aa] to-[#d4aa3a] transition-all duration-500 ${activeIndex === index ? 'opacity-100' : 'opacity-0'}`} />
@@ -67,9 +66,8 @@ const CategoriesSection = () => {
             ))}
           </div>
 
-          {/* Image Droite (Prend toute la hauteur disponible) */}
+          {/* Image Droite */}
           <div className="w-1/2 relative">
-            {/* h-full : l'image s'adapte à la hauteur de la liste de gauche */}
             <div className="h-full min-h-[400px] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_-12px_rgba(0,0,0,0.8)] border border-white/10 relative">
               {CATEGORIES.map((cat, index) => (
                 <img key={cat.id} src={cat.image} alt={cat.title} className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out ${activeIndex === index ? 'opacity-100 scale-100' : 'opacity-0 scale-110'}`} />

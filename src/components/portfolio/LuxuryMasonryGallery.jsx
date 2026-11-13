@@ -1,8 +1,8 @@
 // src/components/portfolio/LuxuryMasonryGallery.jsx
 import { useState, useEffect } from 'react';
 import SectionHeader from '../ui/SectionHeader';
-
-
+// 👇 IMPORT DE TA NOUVELLE IMAGE DE FOND
+import bgImage from '../../assets/background v01-03.png';
 
 // =====================================================
 // 1. DONNÉES DES PROJETS
@@ -41,9 +41,7 @@ const MAIN_CATEGORIES = [
 // 2. COMPOSANT CARTE PROJET
 // =====================================================
 const ProjectCard = ({ project, onClick }) => {
-  // On ajoute la logique pour gérer plusieurs tailles
-  let aspectClass = 'aspect-square'; // Par défaut
-  
+  let aspectClass = 'aspect-square'; 
   if (project.size === 'tall') aspectClass = 'aspect-[3/4]';
   else if (project.size === 'wide') aspectClass = 'aspect-video';
   else if (project.size === 'portrait') aspectClass = 'aspect-[4/5]';
@@ -51,7 +49,7 @@ const ProjectCard = ({ project, onClick }) => {
 
   return (
    <div 
-      className={`group relative ${aspectClass} rounded-[1.5rem] overflow-hidden shadow-sm hover:shadow-2xl cursor-pointer bg-[#f5f4f0] transition-all duration-700 hover:-translate-y-2`} 
+      className={`group relative ${aspectClass} rounded-[1.5rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer bg-[#0D1F3C] border border-white/10 transition-all duration-700 hover:-translate-y-2`} 
       onClick={() => onClick(project)}
     >
       <img 
@@ -61,12 +59,12 @@ const ProjectCard = ({ project, onClick }) => {
         loading="lazy" 
       />
       
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0D1F3C]/95 via-[#0D1F3C]/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0D1F3C]/95 via-[#0D1F3C]/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
       
       <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#F0C75E]/50 rounded-[1.5rem] transition-colors duration-500 z-20 pointer-events-none"></div>
 
       <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500 z-20">
-        <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md border border-white/30 text-white text-[9px] font-bold uppercase tracking-widest rounded-full mb-3">
+        <span className="inline-block px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[9px] font-bold uppercase tracking-widest rounded-full mb-3">
           {project.category}
         </span>
         <h3 className="font-['Playfair_Display'] text-white text-xl font-bold leading-tight group-hover:text-[#F0C75E] transition-colors">
@@ -94,14 +92,14 @@ const ProjectModal = ({ project, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0D1F3C]/90 backdrop-blur-xl animate-fadeIn" onClick={onClose}>
-      <div className="relative bg-white rounded-[2rem] max-w-4xl w-full max-h-[90vh] overflow-hidden animate-slideUp shadow-2xl" onClick={(e) => e.stopPropagation()}>
+      <div className="relative bg-[#F8FAFC] rounded-[2rem] max-w-4xl w-full max-h-[90vh] overflow-hidden animate-slideUp shadow-2xl" onClick={(e) => e.stopPropagation()}>
         
         <button onClick={onClose} className="absolute top-6 right-6 z-10 w-10 h-10 bg-black/20 text-white rounded-full hover:bg-black/40 flex items-center justify-center backdrop-blur-md transition-colors">
           <span className="material-symbols-outlined">close</span>
         </button>
 
         <div className="flex flex-col md:flex-row h-full">
-          <div className="md:w-3/5 bg-[#f5f4f0]">
+          <div className="md:w-3/5 bg-[#0D1F3C]">
             <img src={project.image} alt={project.title} className="w-full h-full object-cover aspect-square md:aspect-auto" />
           </div>
           
@@ -138,33 +136,42 @@ const LuxuryMasonryGallery = () => {
     : [];
 
   return (
-    <div className="py-20 md:py-32 bg-[#F8FAFC] relative overflow-hidden" id="portfolio">
+    // 👇 FOND SOMBRE ET MIN-H-SCREEN POUR L'HOMOGÉNÉITÉ
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden py-20 bg-[#071325]" id="portfolio">
       
-      {/* Halos de lumière en fond */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F0C75E]/5 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#1A3A6B]/5 rounded-full blur-[120px] pointer-events-none"></div>
+      {/* 👇 IMAGE DE FOND AVEC L'EFFET DU HERO */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat w-full h-full scale-105 animate-slow-zoom"
+        style={{ backgroundImage: `url(${bgImage})` }}
+      >
+        {/* Le dégradé très léger pour la lisibilité */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0D1F3C]/50 via-[#0D1F3C]/20 to-[#0D1F3C]/10"></div>
+      </div>
 
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+      {/* Halos de lumière */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F0C75E]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#1E7AC4]/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 relative z-10 w-full">
         
-        {/* --- VUE 1 : LA GRILLE DES 4 CATÉGORIES (Avec le nouvel en-tête à gauche) --- */}
+        {/* --- VUE 1 : LA GRILLE DES 4 CATÉGORIES --- */}
         {!activeCategory && (
           <div className="animate-fadeIn">
             
+            {/* On utilise le SectionHeader en mode sombre (par défaut) */}
             <SectionHeader
-  eyebrow="Explorer"
-  title="Nos"
-  highlight="Réalisations"
-  description="Cliquez sur une catégorie pour plonger dans notre univers créatif."
-  light
-/>
+              eyebrow="Explorer"
+              title="Nos"
+              highlight="Réalisations"
+              description="Cliquez sur une catégorie pour plonger dans notre univers créatif."
+            />
 
-            {/* Les 4 blocs catégories */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
               {MAIN_CATEGORIES.map((cat) => (
                 <div 
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className="group relative overflow-hidden aspect-[3/4] rounded-[2rem] cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-700 hover:-translate-y-2"
+                  className="group relative overflow-hidden aspect-[3/4] rounded-[2rem] cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-700 hover:-translate-y-2 border border-white/10"
                 >
                   <img src={cat.image} alt={cat.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110" />
                   
@@ -188,23 +195,24 @@ const LuxuryMasonryGallery = () => {
           </div>
         )}
 
-        {/* --- VUE 2 : LA GALERIE DES TRAVAUX (Style Masonry) --- */}
+        {/* --- VUE 2 : LA GALERIE DES TRAVAUX --- */}
         {activeCategory && (
           <div className="animate-slideUp">
             
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-[#e8e8ec] pb-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-white/10 pb-8">
               <div>
                 <button 
                   onClick={() => setActiveCategory(null)}
-                  className="inline-flex items-center gap-2 text-[#4A6A8A] hover:text-[#0D1F3C] font-['Montserrat'] text-xs uppercase tracking-widest font-bold mb-6 group transition-colors"
+                  className="inline-flex items-center gap-2 text-white/60 hover:text-white font-['Montserrat'] text-xs uppercase tracking-widest font-bold mb-6 group transition-colors"
                 >
                   <span className="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
                   Retour aux catégories
                 </button>
-                <h2 className="font-['Playfair_Display'] text-4xl md:text-5xl text-[#0D1F3C] font-bold">
+                {/* Titre en blanc pour le fond sombre */}
+                <h2 className="font-['Playfair_Display'] text-4xl md:text-5xl text-white font-bold">
                   {activeCategory}
                 </h2>
-                <p className="text-[#4A6A8A] mt-2 font-['Montserrat'] text-sm">
+                <p className="text-white/60 mt-2 font-['Montserrat'] text-sm">
                   {filteredProjects.length} projet{filteredProjects.length > 1 ? 's' : ''} dans cette catégorie
                 </p>
               </div>
@@ -229,7 +237,7 @@ const LuxuryMasonryGallery = () => {
         )}
 
       </div>
-    </div>
+    </section>
   );
 };
 

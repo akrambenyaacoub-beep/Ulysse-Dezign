@@ -1219,3 +1219,42 @@ body {
 .animate-slide-hint {
   animation: slideHint 1.5s ease-in-out infinite;
 }
+/* src/index.css */
+
+/* 1. Active le défilement fluide natif sur tout le site */
+html {
+  scroll-behavior: smooth;
+  /* Optionnel : ajuste la vitesse du scroll natif (si supporté) */
+  scroll-padding-top: 80px; /* Évite que la navbar ne cache le haut des sections */
+}
+
+/* 2. Cache la barre de défilement tout en gardant le scroll actif */
+body::-webkit-scrollbar {
+  display: none;
+}
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 3. L'EFFET "SNAP" FLUIDE (le secret) */
+.snap-container {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y proximity; /* 'proximity' est plus doux que 'mandatory' */
+  scroll-behavior: smooth;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always; /* Oblige à s'arrêter sur la section, mais sans bloquer */
+}
+
+/* Cache la barre de défilement du conteneur snap */
+.snap-container::-webkit-scrollbar {
+  display: none;
+}
+.snap-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -46,192 +46,227 @@ const LandingPage = () => {
   const scrollTo = useCallback((id) => {
     const element = document.getElementById(id);
     if (element) {
-      const headerHeight = document.querySelector('header')?.offsetHeight || 80;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({ top: elementPosition - headerHeight - 20, behavior: 'smooth' });
+      // On scroll dans le conteneur .snap-container
+      const container = document.querySelector('.snap-container');
+      if (container) {
+        const headerHeight = 80;
+        const elementPosition = element.offsetTop;
+        container.scrollTo({ top: elementPosition - headerHeight, behavior: 'smooth' });
+      }
     }
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => setShowScrollTop(window.scrollY > 500);
-    window.addEventListener('scroll', handleScroll);
+    // On écoute le scroll sur le conteneur, pas sur la fenêtre
+    const container = document.querySelector('.snap-container');
+    const handleScroll = () => {
+      if (container) setShowScrollTop(container.scrollTop > 500);
+    };
+    
+    if (container) container.addEventListener('scroll', handleScroll);
+    
     const interval = setInterval(() => {
       setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length);
     }, 6000);
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      if (container) container.removeEventListener('scroll', handleScroll);
       clearInterval(interval);
     };
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#081b38] font-['Montserrat'] overflow-x-hidden">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#081b38] font-['Montserrat'] overflow-hidden">
+      
       <Navbar scrollTo={scrollTo} />
 
-      <main>
-        {/* 1. HERO — exception h1 */}
-        <HeroSection scrollTo={scrollTo} />
+      {/* 👇 CONTENEUR PRINCIPAL AVEC LA CLASSE .snap-container (définie dans index.css) */}
+      <div className="snap-container">
+        
+        {/* 1. HERO */}
+        <div className="snap-section w-full">
+          <HeroSection scrollTo={scrollTo} />
+        </div>
 
         {/* 2. CATÉGORIES */}
-        <CategoriesSection />
+        <div className="snap-section w-full">
+          <CategoriesSection />
+        </div>
 
         {/* 3. PRODUITS */}
-        <ProductsSection />
+        <div className="snap-section w-full">
+          <ProductsSection />
+        </div>
 
-        {/* 4. PORTFOLIO — fond clair, header light */}
-        <div id="portfolio">
+        {/* 4. PORTFOLIO */}
+        <div className="snap-section w-full" id="portfolio">
           <LuxuryMasonryGallery />
         </div>
 
         {/* 5. SERVICES */}
-        <SectionWrapper id="services">
-          <SectionHeader
-            eyebrow="Notre Expertise"
-            title="Nos"
-            highlight="Services"
-            description="Des solutions complètes et sur-mesure pour tous vos besoins d'impression."
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {SERVICES.map((service, idx) => (
-              <div key={idx} className="group relative bg-white/5 backdrop-blur-md rounded-[1.5rem] p-3 transition-all duration-700 hover:-translate-y-2 hover:bg-white/10 border border-white/10 hover:border-[#F0C75E]/30 hover:shadow-[0_20px_50px_-12px_rgba(240,199,94,0.15)] flex flex-col">
-                <div className="relative h-48 sm:h-56 rounded-[1rem] overflow-hidden bg-[#0D1F3C]">
-                  <img src={service.image} alt={service.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0D1F3C]/90 via-[#0D1F3C]/20 to-transparent" />
-                  <div className="absolute bottom-4 left-4 w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-[#F0C75E] transition-colors duration-500">
-                    <span className="material-symbols-outlined text-white group-hover:text-[#0D1F3C] text-2xl transition-colors duration-500">{service.icon}</span>
+        <div className="snap-section w-full">
+          <SectionWrapper id="services">
+            <SectionHeader
+              eyebrow="Notre Expertise"
+              title="Nos"
+              highlight="Services"
+              description="Des solutions complètes et sur-mesure pour tous vos besoins d'impression."
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {SERVICES.map((service, idx) => (
+                <div key={idx} className="group relative bg-white/5 backdrop-blur-md rounded-[1.5rem] p-3 transition-all duration-700 hover:-translate-y-2 hover:bg-white/10 border border-white/10 hover:border-[#F0C75E]/30 hover:shadow-[0_20px_50px_-12px_rgba(240,199,94,0.15)] flex flex-col">
+                  <div className="relative h-48 sm:h-56 rounded-[1rem] overflow-hidden bg-[#0D1F3C]">
+                    <img src={service.image} alt={service.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0D1F3C]/90 via-[#0D1F3C]/20 to-transparent" />
+                    <div className="absolute bottom-4 left-4 w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-[#F0C75E] transition-colors duration-500">
+                      <span className="material-symbols-outlined text-white group-hover:text-[#0D1F3C] text-2xl transition-colors duration-500">{service.icon}</span>
+                    </div>
+                  </div>
+                  <div className="p-5 flex flex-col flex-grow">
+                    <p className="text-[9px] font-bold uppercase tracking-widest text-[#F0C75E] mb-2">{service.subtitle || 'Service Premium'}</p>
+                    <h3 className="font-['Playfair_Display'] text-xl text-white font-bold leading-tight mb-3">{service.title}</h3>
+                    <p className="text-sm text-white/60 leading-relaxed font-['Montserrat'] font-light">{service.description}</p>
+                    {service.points && (
+                      <div className="flex flex-wrap gap-1 mt-4">
+                        {service.points.map((point, i) => (
+                          <span key={i} className="text-[9px] bg-white/5 text-white/70 px-2 py-1 rounded-full border border-white/5">✓ {point}</span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
-                <div className="p-5 flex flex-col flex-grow">
-                  <p className="text-[9px] font-bold uppercase tracking-widest text-[#F0C75E] mb-2">{service.subtitle || 'Service Premium'}</p>
-                  <h3 className="font-['Playfair_Display'] text-xl text-white font-bold leading-tight mb-3">{service.title}</h3>
-                  <p className="text-sm text-white/60 leading-relaxed font-['Montserrat'] font-light">{service.description}</p>
-                  {service.points && (
-                    <div className="flex flex-wrap gap-1 mt-4">
-                      {service.points.map((point, i) => (
-                        <span key={i} className="text-[9px] bg-white/5 text-white/70 px-2 py-1 rounded-full border border-white/5">✓ {point}</span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </SectionWrapper>
+              ))}
+            </div>
+          </SectionWrapper>
+        </div>
 
-        {/* 6. PROCESSUS — header centré */}
-        <SectionWrapper>
-          <SectionHeader
-            eyebrow="Méthodologie"
-            title="Notre"
-            highlight="Processus"
-            description="De l'idée à la réalisation en quelques étapes."
-            align="center"
-          />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 relative">
-            <div className="hidden md:block absolute top-6 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-[#F0C75E]/30 to-transparent z-0" />
-            {PROCESS_STEPS.map((step, idx) => (
-              <div key={idx} className="relative text-center group z-10">
-                <div className="w-12 h-12 mx-auto rounded-full bg-[#0D1F3C] border border-[#F0C75E]/50 flex items-center justify-center text-[#F0C75E] font-['Playfair_Display'] text-lg font-bold shadow-[0_0_15px_-3px_rgba(240,199,94,0.3)] group-hover:scale-110 group-hover:bg-[#F0C75E] group-hover:text-[#0D1F3C] transition-all duration-500">
-                  {step.step}
+        {/* 6. PROCESSUS */}
+        <div className="snap-section w-full">
+          <SectionWrapper>
+            <SectionHeader
+              eyebrow="Méthodologie"
+              title="Notre"
+              highlight="Processus"
+              description="De l'idée à la réalisation en quelques étapes."
+              align="center"
+            />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 relative">
+              <div className="hidden md:block absolute top-6 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-[#F0C75E]/30 to-transparent z-0" />
+              {PROCESS_STEPS.map((step, idx) => (
+                <div key={idx} className="relative text-center group z-10">
+                  <div className="w-12 h-12 mx-auto rounded-full bg-[#0D1F3C] border border-[#F0C75E]/50 flex items-center justify-center text-[#F0C75E] font-['Playfair_Display'] text-lg font-bold shadow-[0_0_15px_-3px_rgba(240,199,94,0.3)] group-hover:scale-110 group-hover:bg-[#F0C75E] group-hover:text-[#0D1F3C] transition-all duration-500">
+                    {step.step}
+                  </div>
+                  <div className="mt-4">
+                    <span className="text-[9px] text-[#F0C75E] font-bold uppercase tracking-widest opacity-80">{step.subtitle}</span>
+                    <h3 className="font-['Playfair_Display'] text-base md:text-lg text-white font-semibold mt-1 group-hover:text-[#F0C75E] transition-colors duration-300">{step.title}</h3>
+                    <p className="text-[11px] md:text-xs text-white/50 mt-1 font-['Montserrat'] leading-relaxed max-w-[150px] mx-auto">{step.description}</p>
+                  </div>
                 </div>
-                <div className="mt-4">
-                  <span className="text-[9px] text-[#F0C75E] font-bold uppercase tracking-widest opacity-80">{step.subtitle}</span>
-                  <h3 className="font-['Playfair_Display'] text-base md:text-lg text-white font-semibold mt-1 group-hover:text-[#F0C75E] transition-colors duration-300">{step.title}</h3>
-                  <p className="text-[11px] md:text-xs text-white/50 mt-1 font-['Montserrat'] leading-relaxed max-w-[150px] mx-auto">{step.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </SectionWrapper>
+              ))}
+            </div>
+          </SectionWrapper>
+        </div>
 
         {/* 7. AVIS */}
-        <SectionWrapper id="testimonials">
-          <SectionHeader
-            eyebrow="Témoignages"
-            title="Ce qu'ils pensent de"
-            highlight="nous"
-          />
-          <div className="relative max-w-3xl mx-auto">
-            <div className="relative overflow-hidden min-h-[250px] md:min-h-[220px]">
-              {TESTIMONIALS.map((testimonial, idx) => (
-                <div key={testimonial.id} className={`absolute inset-0 transition-all duration-700 ease-in-out transform flex items-center justify-center ${idx === activeTestimonial ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 -translate-x-full pointer-events-none z-0'}`}>
-                  <div className="bg-white/5 backdrop-blur-xl rounded-[2rem] p-8 md:p-12 border border-white/10 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] w-full relative">
-                    <div className="absolute top-6 right-8 text-[#F0C75E]/10">
-                      <span className="material-symbols-outlined text-6xl">format_quote</span>
-                    </div>
-                    <div className="flex flex-col md:flex-row items-center md:items-start gap-6 relative z-10">
-                      <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-[#F0C75E] flex-shrink-0 shadow-[0_0_20px_rgba(240,199,94,0.3)]">
-                        <img src={testimonial.image} alt={testimonial.name} className="w-full h-full object-cover" />
+        <div className="snap-section w-full">
+          <SectionWrapper id="testimonials">
+            <SectionHeader
+              eyebrow="Témoignages"
+              title="Ce qu'ils pensent de"
+              highlight="nous"
+            />
+            <div className="relative max-w-3xl mx-auto">
+              <div className="relative overflow-hidden min-h-[250px] md:min-h-[220px]">
+                {TESTIMONIALS.map((testimonial, idx) => (
+                  <div key={testimonial.id} className={`absolute inset-0 transition-all duration-700 ease-in-out transform flex items-center justify-center ${idx === activeTestimonial ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 -translate-x-full pointer-events-none z-0'}`}>
+                    <div className="bg-white/5 backdrop-blur-xl rounded-[2rem] p-8 md:p-12 border border-white/10 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] w-full relative">
+                      <div className="absolute top-6 right-8 text-[#F0C75E]/10">
+                        <span className="material-symbols-outlined text-6xl">format_quote</span>
                       </div>
-                      <div className="text-center md:text-left flex-1">
-                        <div className="flex justify-center md:justify-start gap-1 text-[#F0C75E] mb-2">
-                          {[...Array(testimonial.rating)].map((_, i) => (
-                            <span key={i} className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                          ))}
+                      <div className="flex flex-col md:flex-row items-center md:items-start gap-6 relative z-10">
+                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-[#F0C75E] flex-shrink-0 shadow-[0_0_20px_rgba(240,199,94,0.3)]">
+                          <img src={testimonial.image} alt={testimonial.name} className="w-full h-full object-cover" />
                         </div>
-                        <p className="text-lg md:text-xl text-white/90 font-['Playfair_Display'] italic leading-relaxed mb-4">"{testimonial.content}"</p>
-                        <div>
-                          <h4 className="font-['Playfair_Display'] text-lg text-white font-bold">{testimonial.name}</h4>
-                          <p className="text-xs text-[#F0C75E] font-['Montserrat'] uppercase tracking-wider mt-1">{testimonial.role}</p>
+                        <div className="text-center md:text-left flex-1">
+                          <div className="flex justify-center md:justify-start gap-1 text-[#F0C75E] mb-2">
+                            {[...Array(testimonial.rating)].map((_, i) => (
+                              <span key={i} className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                            ))}
+                          </div>
+                          <p className="text-lg md:text-xl text-white/90 font-['Playfair_Display'] italic leading-relaxed mb-4">"{testimonial.content}"</p>
+                          <div>
+                            <h4 className="font-['Playfair_Display'] text-lg text-white font-bold">{testimonial.name}</h4>
+                            <p className="text-xs text-[#F0C75E] font-['Montserrat'] uppercase tracking-wider mt-1">{testimonial.role}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-            <div className="flex justify-center gap-3 mt-8">
-              {TESTIMONIALS.map((_, idx) => (
-                <button key={idx} onClick={() => setActiveTestimonial(idx)} className={`transition-all duration-500 rounded-full ${idx === activeTestimonial ? 'bg-[#F0C75E] w-10 h-2 shadow-[0_0_10px_rgba(240,199,94,0.5)]' : 'bg-white/20 w-2 h-2 hover:bg-white/40'}`} />
-              ))}
-            </div>
-          </div>
-        </SectionWrapper>
-
-        {/* 8. AVANTAGES — fond blanc */}
-        <section className="py-20 md:py-28 bg-white">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 text-center">
-            {[
-              { icon: 'high_quality', title: 'Résolution Extra HD', desc: 'Une finesse de détail inégalée pour toutes vos impressions.' },
-              { icon: 'shield', title: 'Durée de Vie Prolongée', desc: 'Encres polymérisées aux UV pour une résistance optimale.' },
-              { icon: 'content_cut', title: 'Découpe Laser Précise', desc: 'Contours nets et formes complexes avec précision chirurgicale.' },
-              { icon: 'rocket_launch', title: 'Production Express', desc: 'Expédition sous 48h pour vos projets prioritaires.' }
-            ].map((item, idx) => (
-              <div key={idx} className="flex flex-col items-center">
-                <div className="w-16 h-16 rounded-full border border-[#F0C75E]/20 flex items-center justify-center mb-3">
-                  <span className="material-symbols-outlined text-[#F0C75E] text-3xl">{item.icon}</span>
-                </div>
-                <h3 className="font-['Playfair_Display'] text-lg text-[#1A3A6B] font-semibold">{item.title}</h3>
-                <p className="text-xs sm:text-sm text-[#4A6A8A] font-['Montserrat'] font-light mt-1">{item.desc}</p>
+                ))}
               </div>
-            ))}
-          </div>
-        </section>
+              <div className="flex justify-center gap-3 mt-8">
+                {TESTIMONIALS.map((_, idx) => (
+                  <button key={idx} onClick={() => setActiveTestimonial(idx)} className={`transition-all duration-500 rounded-full ${idx === activeTestimonial ? 'bg-[#F0C75E] w-10 h-2 shadow-[0_0_10px_rgba(240,199,94,0.5)]' : 'bg-white/20 w-2 h-2 hover:bg-white/40'}`} />
+                ))}
+              </div>
+            </div>
+          </SectionWrapper>
+        </div>
+
+        {/* 8. AVANTAGES (Fond blanc) */}
+        <div className="snap-section w-full">
+          <section className="py-20 md:py-28 bg-white h-full flex flex-col justify-center">
+            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 text-center">
+              {[
+                { icon: 'high_quality', title: 'Résolution Extra HD', desc: 'Une finesse de détail inégalée pour toutes vos impressions.' },
+                { icon: 'shield', title: 'Durée de Vie Prolongée', desc: 'Encres polymérisées aux UV pour une résistance optimale.' },
+                { icon: 'content_cut', title: 'Découpe Laser Précise', desc: 'Contours nets et formes complexes avec précision chirurgicale.' },
+                { icon: 'rocket_launch', title: 'Production Express', desc: 'Expédition sous 48h pour vos projets prioritaires.' }
+              ].map((item, idx) => (
+                <div key={idx} className="flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full border border-[#F0C75E]/20 flex items-center justify-center mb-3">
+                    <span className="material-symbols-outlined text-[#F0C75E] text-3xl">{item.icon}</span>
+                  </div>
+                  <h3 className="font-['Playfair_Display'] text-lg text-[#1A3A6B] font-semibold">{item.title}</h3>
+                  <p className="text-xs sm:text-sm text-[#4A6A8A] font-['Montserrat'] font-light mt-1">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
 
         {/* 9. NEWSLETTER */}
-        <SectionWrapper>
-          <SectionHeader
-            eyebrow="Ne manquez rien"
-            title="Rejoignez le"
-            highlight="Cercle Privé"
-            description="Inscrivez-vous pour recevoir nos invitations exclusives, nos conseils de design et nos offres privilèges."
-            align="center"
-          />
-          <form className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto" onSubmit={(e) => e.preventDefault()}>
-            <input type="email" placeholder="Votre adresse email" className="flex-1 px-6 py-4 rounded-full bg-[#0D1F3C]/50 backdrop-blur-md border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-[#F0C75E] focus:ring-1 focus:ring-[#F0C75E]/50 font-['Montserrat'] text-sm transition-all duration-300" />
-            <button type="submit" className="group relative px-8 py-4 rounded-full bg-gradient-to-r from-[#F0C75E] to-[#d4aa3a] text-[#0D1F3C] font-bold font-['Montserrat'] text-sm uppercase tracking-widest overflow-hidden shadow-[0_0_30px_-10px_rgba(240,199,94,0.6)] hover:shadow-[0_0_40px_-10px_rgba(240,199,94,0.8)] transition-all duration-500 hover:-translate-y-0.5">
-              <span className="relative z-10">S'inscrire</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-shine" />
-            </button>
-          </form>
-        </SectionWrapper>
+        <div className="snap-section w-full">
+          <SectionWrapper>
+            <SectionHeader
+              eyebrow="Ne manquez rien"
+              title="Rejoignez le"
+              highlight="Cercle Privé"
+              description="Inscrivez-vous pour recevoir nos invitations exclusives, nos conseils de design et nos offres privilèges."
+              align="center"
+            />
+            <form className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto" onSubmit={(e) => e.preventDefault()}>
+              <input type="email" placeholder="Votre adresse email" className="flex-1 px-6 py-4 rounded-full bg-[#0D1F3C]/50 backdrop-blur-md border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-[#F0C75E] focus:ring-1 focus:ring-[#F0C75E]/50 font-['Montserrat'] text-sm transition-all duration-300" />
+              <button type="submit" className="group relative px-8 py-4 rounded-full bg-gradient-to-r from-[#F0C75E] to-[#d4aa3a] text-[#0D1F3C] font-bold font-['Montserrat'] text-sm uppercase tracking-widest overflow-hidden shadow-[0_0_30px_-10px_rgba(240,199,94,0.6)] hover:shadow-[0_0_40px_-10px_rgba(240,199,94,0.8)] transition-all duration-500 hover:-translate-y-0.5">
+                <span className="relative z-10">S'inscrire</span>
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-shine" />
+              </button>
+            </form>
+          </SectionWrapper>
+        </div>
 
-        {/* 10. STATS — DÉPLACÉ À LA FIN (juste avant Contact) */}
-        <StatsSection />
+        {/* 10. STATS (Placé à la fin comme demandé) */}
+        <div className="snap-section w-full">
+          <StatsSection />
+        </div>
 
         {/* 11. CONTACT */}
-        <ContactSection />
-      </main>
+        <div className="snap-section w-full">
+          <ContactSection />
+        </div>
+
+      </div>
 
       <Footer scrollTo={scrollTo} />
 
@@ -242,7 +277,10 @@ const LandingPage = () => {
       </a>
 
       {showScrollTop && (
-        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="group fixed bottom-24 right-6 z-50 bg-white/10 backdrop-blur-md border border-white/20 text-[#F0C75E] p-3 rounded-full shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] hover:bg-[#F0C75E] hover:text-[#0D1F3C] hover:border-[#F0C75E] hover:scale-110 hover:shadow-[0_0_20px_-5px_rgba(240,199,94,0.6)] transition-all duration-500 flex items-center justify-center">
+        <button onClick={() => {
+          const container = document.querySelector('.snap-container');
+          if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
+        }} className="group fixed bottom-24 right-6 z-50 bg-white/10 backdrop-blur-md border border-white/20 text-[#F0C75E] p-3 rounded-full shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] hover:bg-[#F0C75E] hover:text-[#0D1F3C] hover:border-[#F0C75E] hover:scale-110 hover:shadow-[0_0_20px_-5px_rgba(240,199,94,0.6)] transition-all duration-500 flex items-center justify-center">
           <span className="material-symbols-outlined text-2xl font-bold group-hover:-translate-y-1 transition-transform">arrow_upward</span>
         </button>
       )}

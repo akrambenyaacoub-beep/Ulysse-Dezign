@@ -18,7 +18,8 @@ const HeroSection = ({ scrollTo }) => {
   }, [images.length]);
 
   return (
-    <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-[#0D1F3C] pt-20 pb-10 md:pt-24 md:pb-16" id="home">
+    // 👇 min-h-screen remplace min-h-[85vh] pour remplir 100% de l'écran
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#0D1F3C] pt-20" id="home">
       
       {/* --- FOND ET EFFETS LUMINEUX --- */}
       <div 
@@ -29,7 +30,7 @@ const HeroSection = ({ scrollTo }) => {
         <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-[#F0C75E]/10 rounded-full blur-[120px] animate-pulse-slow mix-blend-screen"></div>
       </div>
 
-      <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-12 grid md:grid-cols-2 gap-6 md:gap-12 lg:gap-16 items-center relative z-10 w-full">
+      <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-12 grid md:grid-cols-2 gap-6 md:gap-12 lg:gap-16 items-center relative z-10 w-full pt-10 pb-20">
         
         {/* --- PARTIE GAUCHE : LE TEXTE --- */}
         <div className="order-1 md:order-1 space-y-4 md:space-y-6 text-center md:text-left animate-slide-right">
@@ -58,7 +59,6 @@ const HeroSection = ({ scrollTo }) => {
             "Plus qu'une imprimerie, une expérience."
           </p>
 
-          {/* 👇 NOUVEAU TEXTE AJOUTÉ ICI */}
           <p className="text-xs sm:text-sm md:text-base text-white/60 max-w-md leading-relaxed font-['Montserrat'] font-light mx-auto md:mx-0">
             Sublimez votre image de marque avec des finitions d'exception. Découpe laser, vinyle haute performance, et impression UV de pointe.
           </p>
@@ -80,14 +80,11 @@ const HeroSection = ({ scrollTo }) => {
         
         {/* --- PARTIE DROITE : LE CARROUSEL D'IMAGES --- */}
         <div className="order-2 md:order-2 mt-4 md:mt-0 flex justify-center md:justify-end animate-slide-left">
-          
           <div className="relative w-full max-w-[300px] sm:max-w-[350px] md:max-w-[480px] group">
-            
             <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-[#F0C75E] via-[#fce8aa] to-[#d4aa3a] transform rotate-3 scale-105 transition-all duration-700 group-hover:rotate-6 group-hover:scale-110 shadow-[0_0_50px_-10px_rgba(240,199,94,0.4)] animate-gold-shimmer -z-10"></div>
             
             {/* L'IMAGE AU FORMAT PAYSAGE */}
             <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] border border-white/20 bg-[#0D1F3C] z-10">
-              
               {images.map((img, index) => (
                 <img 
                   key={index}
@@ -113,14 +110,13 @@ const HeroSection = ({ scrollTo }) => {
                   />
                 ))}
               </div>
-
             </div>
           </div>
         </div>
         
       </div>
       
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity cursor-pointer" onClick={() => scrollTo('categories')}>
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity cursor-pointer" onClick={() => scrollTo('categories')}>
         <span className="text-white text-[9px] uppercase tracking-[0.3em] font-['Montserrat']">Découvrir</span>
         <div className="w-px h-8 bg-gradient-to-b from-white to-transparent"></div>
       </div>

@@ -8,6 +8,7 @@ const STATS = [
 
 const StatsSection = () => {
   return (
+    // ✅ py-20 md:py-28 : identique à toutes les autres sections
     <section className="py-20 md:py-28 relative overflow-hidden bg-[#071325]">
       <div className="absolute inset-0 bg-gradient-to-br from-[#071325] via-[#0D1F3C] to-[#0A1628]" />
       <div className="absolute -top-[20%] -right-[10%] w-[500px] h-[500px] bg-[#F0C75E]/10 rounded-full blur-[120px] mix-blend-screen pointer-events-none" />
@@ -20,7 +21,26 @@ const StatsSection = () => {
         }}
       />
 
+      {/* ✅ Conteneur identique : max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 */}
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+        
+        {/* En-tête identique aux autres sections */}
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 sm:mb-16">
+          <div className="text-center md:text-left">
+            <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
+              <span className="w-8 md:w-12 h-px bg-[#F0C75E]"></span>
+              <span className="text-[10px] uppercase tracking-[0.3em] text-[#F0C75E] font-bold font-['Montserrat']">Chiffres Clés</span>
+            </div>
+            <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl md:text-5xl text-white font-bold tracking-tight leading-tight">
+              Notre <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F0C75E] via-[#fce8aa] to-[#d4aa3a]">Impact</span>
+            </h2>
+            <p className="text-sm sm:text-base text-white/60 mt-4 font-['Montserrat'] font-light max-w-xl mx-auto md:mx-0">
+              Des chiffres qui parlent d'eux-mêmes et qui reflètent notre engagement.
+            </p>
+          </div>
+        </div>
+
+        {/* Grille des stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
           {STATS.map((stat, idx) => (
             <div

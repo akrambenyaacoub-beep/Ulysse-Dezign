@@ -72,21 +72,18 @@ const LandingPage = () => {
         {/* 1. HERO — exception h1 */}
         <HeroSection scrollTo={scrollTo} />
 
-        {/* 2. STATS */}
-        <StatsSection />
-
-        {/* 3. CATÉGORIES */}
+        {/* 2. CATÉGORIES */}
         <CategoriesSection />
 
-        {/* 4. PRODUITS */}
+        {/* 3. PRODUITS */}
         <ProductsSection />
 
-        {/* 5. PORTFOLIO — fond clair, header light */}
+        {/* 4. PORTFOLIO — fond clair, header light */}
         <div id="portfolio">
           <LuxuryMasonryGallery />
         </div>
 
-        {/* 6. SERVICES */}
+        {/* 5. SERVICES */}
         <SectionWrapper id="services">
           <SectionHeader
             eyebrow="Notre Expertise"
@@ -121,7 +118,7 @@ const LandingPage = () => {
           </div>
         </SectionWrapper>
 
-        {/* 7. PROCESSUS — header centré */}
+        {/* 6. PROCESSUS — header centré */}
         <SectionWrapper>
           <SectionHeader
             eyebrow="Méthodologie"
@@ -147,7 +144,7 @@ const LandingPage = () => {
           </div>
         </SectionWrapper>
 
-        {/* 8. AVIS */}
+        {/* 7. AVIS */}
         <SectionWrapper id="testimonials">
           <SectionHeader
             eyebrow="Témoignages"
@@ -191,7 +188,7 @@ const LandingPage = () => {
           </div>
         </SectionWrapper>
 
-        {/* 9. AVANTAGES — fond blanc (carte claire) */}
+        {/* 8. AVANTAGES — fond blanc */}
         <section className="py-20 md:py-28 bg-white">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 text-center">
             {[
@@ -211,7 +208,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-        {/* 10. NEWSLETTER — header centré */}
+        {/* 9. NEWSLETTER */}
         <SectionWrapper>
           <SectionHeader
             eyebrow="Ne manquez rien"
@@ -228,6 +225,9 @@ const LandingPage = () => {
             </button>
           </form>
         </SectionWrapper>
+
+        {/* 10. STATS — DÉPLACÉ À LA FIN (juste avant Contact) */}
+        <StatsSection />
 
         {/* 11. CONTACT */}
         <ContactSection />

@@ -2,14 +2,22 @@
 /*  1. IMPORTS & CONFIGURATION TAILWIND
 /* ============================================================ */
 
-/* ✅ CORRECTION : Utiliser les directives @tailwind pour Tailwind 3 */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ============================================================ */
-/*  2. STYLES DE BASE
+/*  2. STYLES DE BASE & SCROLL SNAP (SCROLL UNIQUE)
 /* ============================================================ */
+
+html {
+  /* Active le défilement fluide natif pour tous les liens d'ancrage */
+  scroll-behavior: smooth;
+  /* Évite que la navbar ne cache le haut des sections lors du scroll vers une ancre */
+  scroll-padding-top: 80px; 
+  /* Active l'aimantation sur le scroll principal du navigateur */
+  scroll-snap-type: y proximity; 
+}
 
 body {
   background-color: #0A1628;
@@ -18,6 +26,8 @@ body {
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 #root {
@@ -25,110 +35,88 @@ body {
   background-color: #0A1628;
 }
 
+/* Chaque section s'aimante en haut de l'écran */
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Barre de défilement personnalisée globale (Thème Sombre & Doré) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #071325;
+}
+::-webkit-scrollbar-thumb {
+  background: #F0C75E;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4aa3a;
+}
+
+/* Cache la barre de défilement pour les conteneurs spécifiques (ex: carrousels) */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* ============================================================ */
 /*  3. ANIMATIONS DE BASE
 /* ============================================================ */
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes pulse {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.6;
-    transform: scale(1.05);
-  }
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
 }
 
 @keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
 }
 
 @keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes slideInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes ring {
@@ -140,25 +128,13 @@ body {
 }
 
 @keyframes notificationSlideIn {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes dragPulse {
-  0%, 100% {
-    transform: scale(1);
-    border-style: dashed;
-  }
-  50% {
-    transform: scale(1.02);
-    border-style: dashed;
-  }
+  0%, 100% { transform: scale(1); border-style: dashed; }
+  50% { transform: scale(1.02); border-style: dashed; }
 }
 
 @keyframes dropBounce {
@@ -175,78 +151,40 @@ body {
 }
 
 @keyframes pulse-gold {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(240, 199, 94, 0.4);
-    border-color: #F0C75E;
-  }
-  50% {
-    box-shadow: 0 0 15px 4px rgba(240, 199, 94, 0.2);
-    border-color: #d4aa3a;
-  }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(240, 199, 94, 0.4); border-color: #F0C75E; }
+  50% { box-shadow: 0 0 15px 4px rgba(240, 199, 94, 0.2); border-color: #d4aa3a; }
 }
 
 @keyframes pulse-red {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
-    transform: scale(1);
-  }
-  50% {
-    box-shadow: 0 0 15px 4px rgba(239, 68, 68, 0.2);
-    transform: scale(1.05);
-  }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); transform: scale(1); }
+  50% { box-shadow: 0 0 15px 4px rgba(239, 68, 68, 0.2); transform: scale(1.05); }
 }
 
 @keyframes pulse-urgent {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
-  }
-  50% {
-    box-shadow: 0 0 20px 8px rgba(239, 68, 68, 0.3);
-  }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+  50% { box-shadow: 0 0 20px 8px rgba(239, 68, 68, 0.3); }
 }
 
 @keyframes emojiPickerIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* ============================================================ */
 /*  4. CLASSES D'ANIMATION
 /* ============================================================ */
 
-.animate-fadeInUp {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.animate-pulse {
-  animation: pulse 3s ease-in-out infinite;
-}
-
-.animate-bounce {
-  animation: bounce 1s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-slideInRight {
-  animation: slideInRight 0.3s ease-out forwards;
-}
-
-.animate-slideInDown {
-  animation: slideInDown 0.3s ease-out forwards;
-}
-
-.animate-scaleIn {
-  animation: scaleIn 0.3s ease-out forwards;
-}
+.animate-fadeInUp { animation: fadeInUp 0.6s ease-out forwards; }
+.animate-pulse { animation: pulse 3s ease-in-out infinite; }
+.animate-bounce { animation: bounce 1s ease-in-out infinite; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-slideInRight { animation: slideInRight 0.3s ease-out forwards; }
+.animate-slideInDown { animation: slideInDown 0.3s ease-out forwards; }
+.animate-scaleIn { animation: scaleIn 0.3s ease-out forwards; }
+.animate-slideUp { animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
+.animate-fade-in { animation: fadeIn 0.2s ease-out forwards; }
+.animate-slide-up { animation: slideUp 0.2s ease-out forwards; }
 
 .animate-shimmer {
   background: linear-gradient(90deg, transparent 0%, rgba(240, 199, 94, 0.1) 50%, transparent 100%);
@@ -254,140 +192,51 @@ body {
   animation: shimmer 2s infinite;
 }
 
-.animate-slideUp {
-  animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-out forwards;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.2s ease-out forwards;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.2s ease-out forwards;
-}
-
-.notification-ring {
-  animation: ring 0.5s ease-in-out 2;
-}
-
-.notification-enter {
-  animation: notificationSlideIn 0.3s ease-out forwards;
-}
-
-.emoji-picker-open {
-  animation: emojiPickerIn 0.15s ease-out forwards;
-}
+.notification-ring { animation: ring 0.5s ease-in-out 2; }
+.notification-enter { animation: notificationSlideIn 0.3s ease-out forwards; }
+.emoji-picker-open { animation: emojiPickerIn 0.15s ease-out forwards; }
 
 /* ============================================================ */
 /*  5. ANIMATIONS KANBAN
 /* ============================================================ */
 
-.animate-pulse-gold {
-  animation: pulse-gold 1.5s ease-in-out infinite;
-}
-
-.animate-pulse-red {
-  animation: pulse-red 1.5s ease-in-out infinite;
-}
-
-.animate-pulse-urgent {
-  animation: pulse-urgent 1s ease-in-out infinite;
-}
-
-.animate-drag-pulse {
-  animation: dragPulse 1.5s ease-in-out infinite;
-}
-
-.animate-drop-bounce {
-  animation: dropBounce 0.4s ease-out forwards;
-}
-
-.animate-grab-hint {
-  animation: grabHint 1.5s ease-in-out infinite;
-}
+.animate-pulse-gold { animation: pulse-gold 1.5s ease-in-out infinite; }
+.animate-pulse-red { animation: pulse-red 1.5s ease-in-out infinite; }
+.animate-pulse-urgent { animation: pulse-urgent 1s ease-in-out infinite; }
+.animate-drag-pulse { animation: dragPulse 1.5s ease-in-out infinite; }
+.animate-drop-bounce { animation: dropBounce 0.4s ease-out forwards; }
+.animate-grab-hint { animation: grabHint 1.5s ease-in-out infinite; }
 
 /* ============================================================ */
-/*  6. SCROLLBAR PERSONNALISÉE
+/*  6. SCROLLBAR PERSONNALISÉE (Composants spécifiques)
 /* ============================================================ */
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: #0D1F3C;
-  border-radius: 10px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #F0C75E;
-  border-radius: 10px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #d4aa3a;
-}
-
-.custom-scrollbar::-webkit-scrollbar:horizontal {
-  height: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track:horizontal {
-  background: #0D1F3C;
-  border-radius: 10px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:horizontal {
-  background: #F0C75E;
-  border-radius: 10px;
-}
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: #0D1F3C; border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #F0C75E; border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #d4aa3a; }
+.custom-scrollbar::-webkit-scrollbar:horizontal { height: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track:horizontal { background: #0D1F3C; border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:horizontal { background: #F0C75E; border-radius: 10px; }
 
 /* ============================================================ */
 /*  7. KANBAN - DRAG & DROP
 /* ============================================================ */
 
-.kanban-container {
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
-}
-
+.kanban-container { user-select: none !important; }
 .kanban-container input,
 .kanban-container textarea,
 .kanban-container select,
-.kanban-container [contenteditable="true"] {
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
-  user-select: text !important;
-}
+.kanban-container [contenteditable="true"] { user-select: text !important; }
 
 .kanban-task {
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
   user-select: none !important;
   cursor: grab !important;
   touch-action: manipulation;
 }
-
-.kanban-task:active {
-  cursor: grabbing !important;
-}
-
-.kanban-task.no-drag {
-  cursor: default !important;
-}
-
-.kanban-task.no-drag:active {
-  cursor: default !important;
-}
-
+.kanban-task:active { cursor: grabbing !important; }
+.kanban-task.no-drag { cursor: default !important; }
+.kanban-task.no-drag:active { cursor: default !important; }
 .kanban-task img {
   -webkit-user-drag: none;
   -khtml-user-drag: none;
@@ -428,7 +277,6 @@ body {
   align-items: center;
   justify-content: center;
 }
-
 .kanban-empty-drop-zone.active {
   border-color: rgba(240, 199, 94, 0.5);
   background-color: rgba(240, 199, 94, 0.05);
@@ -481,63 +329,21 @@ body {
   box-shadow: var(--clr-shadow) !important;
 }
 
-.light .bg-\[\#0A1628\] {
-  background: var(--clr-card) !important;
-}
-
-.light .bg-\[\#071325\] {
-  background: var(--clr-input) !important;
-  border-color: var(--clr-border) !important;
-}
-
-.light .border-\[\#1A3A6B\] {
-  border-color: var(--clr-border) !important;
-}
-
-.light .border-\[\#1A3A6B\]\/50 {
-  border-color: rgba(229, 221, 208, 0.7) !important;
-}
-
-.light .divide-\[\#1A3A6B\] > * {
-  border-color: var(--clr-border) !important;
-}
-
-.light .border-b-\[\#1A3A6B\] {
-  border-color: var(--clr-border) !important;
-}
-
-.light .border-t-\[\#1A3A6B\] {
-  border-color: var(--clr-border) !important;
-}
-
-.light .text-white {
-  color: var(--clr-text) !important;
-}
-
+.light .bg-\[\#0A1628\] { background: var(--clr-card) !important; }
+.light .bg-\[\#071325\] { background: var(--clr-input) !important; border-color: var(--clr-border) !important; }
+.light .border-\[\#1A3A6B\] { border-color: var(--clr-border) !important; }
+.light .border-\[\#1A3A6B\]\/50 { border-color: rgba(229, 221, 208, 0.7) !important; }
+.light .divide-\[\#1A3A6B\] > * { border-color: var(--clr-border) !important; }
+.light .border-b-\[\#1A3A6B\] { border-color: var(--clr-border) !important; }
+.light .border-t-\[\#1A3A6B\] { border-color: var(--clr-border) !important; }
+.light .text-white { color: var(--clr-text) !important; }
 .light .text-gray-200,
-.light .text-gray-300 {
-  color: var(--clr-text) !important;
-}
-
-.light .text-gray-400 {
-  color: var(--clr-text-secondary) !important;
-}
-
-.light .text-gray-500 {
-  color: var(--clr-text-muted) !important;
-}
-
-.light .text-\[\#F0C75E\] {
-  color: var(--clr-gold) !important;
-}
-
-.light .border-\[\#F0C75E\]\/20 {
-  border-color: rgba(155, 116, 34, 0.2) !important;
-}
-
-.light .border-\[\#F0C75E\]\/30 {
-  border-color: rgba(155, 116, 34, 0.3) !important;
-}
+.light .text-gray-300 { color: var(--clr-text) !important; }
+.light .text-gray-400 { color: var(--clr-text-secondary) !important; }
+.light .text-gray-500 { color: var(--clr-text-muted) !important; }
+.light .text-\[\#F0C75E\] { color: var(--clr-gold) !important; }
+.light .border-\[\#F0C75E\]\/20 { border-color: rgba(155, 116, 34, 0.2) !important; }
+.light .border-\[\#F0C75E\]\/30 { border-color: rgba(155, 116, 34, 0.3) !important; }
 
 .light input,
 .light select,
@@ -546,12 +352,8 @@ body {
   border-color: var(--clr-border) !important;
   color: var(--clr-text) !important;
 }
-
 .light input::placeholder,
-.light textarea::placeholder {
-  color: var(--clr-text-muted) !important;
-}
-
+.light textarea::placeholder { color: var(--clr-text-muted) !important; }
 .light input:focus,
 .light select:focus,
 .light textarea:focus {
@@ -559,49 +361,16 @@ body {
   outline: none !important;
   box-shadow: 0 0 0 3px rgba(155, 116, 34, 0.1) !important;
 }
-
-.light thead {
-  background: var(--clr-input) !important;
-}
-
-.light tbody tr:hover {
-  background: var(--clr-hover) !important;
-}
-
-.light th {
-  color: var(--clr-text-secondary) !important;
-}
-
-.light .bg-\[\#1A3A6B\] {
-  background: var(--clr-hover) !important;
-  color: var(--clr-text) !important;
-}
-
-.light .bg-\[\#1A3A6B\]\/30 {
-  background: var(--clr-hover) !important;
-}
-
-.light .hover\:bg-\[\#1A3A6B\]:hover {
-  background: var(--clr-border) !important;
-}
-
-.light .hover\:bg-\[\#2A4A6B\]:hover {
-  background: var(--clr-border) !important;
-}
-
-.light .bg-\[\#F0C75E\] {
-  background: var(--clr-gold) !important;
-  color: #ffffff !important;
-}
-
-.light .bg-gradient-to-r.from-\[\#F0C75E\].to-\[\#d4aa3a\] {
-  background: linear-gradient(135deg, var(--clr-gold), #7a5a1a) !important;
-  color: #ffffff !important;
-}
-
-.light .hover\:bg-\[\#d4aa3a\]:hover {
-  background: #7a5a1a !important;
-}
+.light thead { background: var(--clr-input) !important; }
+.light tbody tr:hover { background: var(--clr-hover) !important; }
+.light th { color: var(--clr-text-secondary) !important; }
+.light .bg-\[\#1A3A6B\] { background: var(--clr-hover) !important; color: var(--clr-text) !important; }
+.light .bg-\[\#1A3A6B\]\/30 { background: var(--clr-hover) !important; }
+.light .hover\:bg-\[\#1A3A6B\]:hover { background: var(--clr-border) !important; }
+.light .hover\:bg-\[\#2A4A6B\]:hover { background: var(--clr-border) !important; }
+.light .bg-\[\#F0C75E\] { background: var(--clr-gold) !important; color: #ffffff !important; }
+.light .bg-gradient-to-r.from-\[\#F0C75E\].to-\[\#d4aa3a\] { background: linear-gradient(135deg, var(--clr-gold), #7a5a1a) !important; color: #ffffff !important; }
+.light .hover\:bg-\[\#d4aa3a\]:hover { background: #7a5a1a !important; }
 
 .light .bg-yellow-500\/5 { background: #fefce8 !important; }
 .light .bg-blue-500\/5 { background: #eff6ff !important; }
@@ -621,54 +390,26 @@ body {
   border: 1px solid var(--clr-border) !important;
   box-shadow: var(--clr-shadow) !important;
 }
-
-.light .to-\[\#0A1628\] {
-  background: transparent !important;
-}
-
-.light header {
-  background: var(--clr-card) !important;
-  border-color: var(--clr-border) !important;
-}
-
-.light .max-w-5xl {
-  background: var(--clr-card) !important;
-}
-
+.light .to-\[\#0A1628\] { background: transparent !important; }
+.light header { background: var(--clr-card) !important; border-color: var(--clr-border) !important; }
+.light .max-w-5xl { background: var(--clr-card) !important; }
 .light .bg-red-500\/20 { background: #fef2f2 !important; }
 .light .bg-blue-500\/20 { background: #eff6ff !important; }
 .light .bg-green-500\/20 { background: #f0fdf4 !important; }
 .light .bg-yellow-500\/20 { background: #fefce8 !important; }
 .light .bg-purple-500\/20 { background: #faf5ff !important; }
 .light .bg-orange-500\/20 { background: #fff7ed !important; }
-
-.light .hover\:border-\[\#F0C75E\]\/30:hover {
-  border-color: rgba(155, 116, 34, 0.4) !important;
-}
-
-.light .hover\:border-\[\#F0C75E\]\/40:hover {
-  border-color: rgba(155, 116, 34, 0.5) !important;
-}
-
-.light .hover\:border-\[\#F0C75E\]\/50:hover {
-  border-color: rgba(155, 116, 34, 0.6) !important;
-}
-
+.light .hover\:border-\[\#F0C75E\]\/30:hover { border-color: rgba(155, 116, 34, 0.4) !important; }
+.light .hover\:border-\[\#F0C75E\]\/40:hover { border-color: rgba(155, 116, 34, 0.5) !important; }
+.light .hover\:border-\[\#F0C75E\]\/50:hover { border-color: rgba(155, 116, 34, 0.6) !important; }
 .light .bg-red-500\/15 { background: #fef2f2 !important; }
 .light .bg-\[\#F0C75E\]\/15 { background: var(--clr-gold-light) !important; }
 .light .bg-white\/5 { background: var(--clr-input) !important; }
-
 .light .ring-1 { --tw-ring-color: var(--clr-border) !important; }
 .light .ring-2 { --tw-ring-color: var(--clr-border) !important; }
 .light .ring-white\/10 { --tw-ring-color: var(--clr-border) !important; }
 .light .ring-white\/5 { --tw-ring-color: var(--clr-border) !important; }
-
-.light * {
-  transition: background-color 0.25s ease, 
-              border-color 0.25s ease, 
-              color 0.25s ease,
-              box-shadow 0.25s ease;
-}
+.light * { transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease; }
 
 /* ============================================================ */
 /*  9. STYLES POUR LES EMOJIS
@@ -678,12 +419,7 @@ body {
   font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Twemoji Mozilla', sans-serif;
   line-height: 1.6;
 }
-
-.chat-message-text .emoji {
-  font-size: 1.2em;
-  display: inline-block;
-}
-
+.chat-message-text .emoji { font-size: 1.2em; display: inline-block; }
 .emoji-picker-emoji {
   font-size: 1.8rem;
   transition: transform 0.15s ease;
@@ -694,214 +430,56 @@ body {
   width: 100%;
   aspect-ratio: 1;
 }
-
-.emoji-picker-emoji:hover {
-  transform: scale(1.3);
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-}
-
-.emoji-input {
-  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
-}
-
-.emoji-safe {
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-
-.emoji-picker-category {
-  display: flex;
-  gap: 4px;
-  padding: 4px 8px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.emoji-picker-category::-webkit-scrollbar {
-  display: none;
-}
-
+.emoji-picker-emoji:hover { transform: scale(1.3); background: rgba(255, 255, 255, 0.05); border-radius: 8px; }
+.emoji-input { font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif; }
+.emoji-safe { word-break: break-word; overflow-wrap: break-word; }
+.emoji-picker-category { display: flex; gap: 4px; padding: 4px 8px; overflow-x: auto; scrollbar-width: none; }
+.emoji-picker-category::-webkit-scrollbar { display: none; }
 .emoji-picker-category button {
-  min-width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 18px;
+  min-width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; border: none; background: transparent; cursor: pointer; transition: all 0.2s; font-size: 18px;
 }
-
-.emoji-picker-category button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: scale(1.1);
-}
-
-.emoji-picker-category button.active {
-  background: #F0C75E;
-  color: #071325;
-}
-
-.emoji-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 2px;
-  padding: 4px;
-}
-
+.emoji-picker-category button:hover { background: rgba(255, 255, 255, 0.1); transform: scale(1.1); }
+.emoji-picker-category button.active { background: #F0C75E; color: #071325; }
+.emoji-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px; padding: 4px; }
 .emoji-grid button {
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-size: 24px;
-  border-radius: 8px;
-  transition: all 0.15s;
-  padding: 4px;
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  border: none; background: transparent; cursor: pointer; font-size: 24px;
+  border-radius: 8px; transition: all 0.15s; padding: 4px;
 }
-
-.emoji-grid button:hover {
-  background: rgba(255, 255, 255, 0.08);
-  transform: scale(1.2);
-}
+.emoji-grid button:hover { background: rgba(255, 255, 255, 0.08); transform: scale(1.2); }
 
 /* ============================================================ */
 /*  10. STYLES POUR LE CHAT
 /* ============================================================ */
 
-.chat-message-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.chat-message-bubble {
-  position: relative;
-  max-width: 80%;
-  word-wrap: break-word;
-}
-
-.chat-message-header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.75rem;
-  padding: 0 4px;
-  margin-bottom: 2px;
-}
-
-.chat-message-body {
-  padding: 8px 14px;
-  border-radius: 16px;
-  line-height: 1.5;
-}
-
-.chat-message-mine {
-  background: linear-gradient(135deg, #F0C75E, #d4aa3a);
-  color: #071325;
-  border-bottom-right-radius: 4px;
-}
-
-.chat-message-other {
-  background: #0D1F3C;
-  border: 1px solid #1A3A6B;
-  color: #e5e7eb;
-  border-bottom-left-radius: 4px;
-}
-
+.chat-message-container { display: flex; flex-direction: column; gap: 2px; }
+.chat-message-bubble { position: relative; max-width: 80%; word-wrap: break-word; }
+.chat-message-header { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; padding: 0 4px; margin-bottom: 2px; }
+.chat-message-body { padding: 8px 14px; border-radius: 16px; line-height: 1.5; }
+.chat-message-mine { background: linear-gradient(135deg, #F0C75E, #d4aa3a); color: #071325; border-bottom-right-radius: 4px; }
+.chat-message-other { background: #0D1F3C; border: 1px solid #1A3A6B; color: #e5e7eb; border-bottom-left-radius: 4px; }
 .chat-avatar {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: white;
-  flex-shrink: 0;
+  width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; font-weight: 700; color: white; flex-shrink: 0;
 }
-
-.chat-role-badge {
-  font-size: 0.55rem;
-  padding: 1px 6px;
-  border-radius: 10px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.chat-time {
-  font-size: 0.55rem;
-  color: #6b7280;
-  margin-left: auto;
-  white-space: nowrap;
-}
-
-.chat-read-receipt {
-  font-size: 0.55rem;
-  color: rgba(7, 19, 37, 0.5);
-  text-align: right;
-  margin-top: 2px;
-}
-
-.chat-actions {
-  display: flex;
-  gap: 2px;
-  margin-top: 2px;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.chat-message-container:hover .chat-actions {
-  opacity: 1;
-}
-
-.chat-action-btn {
-  padding: 2px 4px;
-  border-radius: 4px;
-  background: transparent;
-  color: #6b7280;
-  font-size: 0.7rem;
-  transition: all 0.2s;
-  border: none;
-  cursor: pointer;
-}
-
-.chat-action-btn:hover {
-  background: #1A3A6B;
-  color: white;
-}
-
-.chat-action-btn:hover.text-blue-400 {
-  color: #60a5fa;
-}
-
-.chat-action-btn:hover.text-red-400 {
-  color: #f87171;
-}
+.chat-role-badge { font-size: 0.55rem; padding: 1px 6px; border-radius: 10px; font-weight: 500; white-space: nowrap; }
+.chat-time { font-size: 0.55rem; color: #6b7280; margin-left: auto; white-space: nowrap; }
+.chat-read-receipt { font-size: 0.55rem; color: rgba(7, 19, 37, 0.5); text-align: right; margin-top: 2px; }
+.chat-actions { display: flex; gap: 2px; margin-top: 2px; opacity: 0; transition: opacity 0.2s; }
+.chat-message-container:hover .chat-actions { opacity: 1; }
+.chat-action-btn { padding: 2px 4px; border-radius: 4px; background: transparent; color: #6b7280; font-size: 0.7rem; transition: all 0.2s; border: none; cursor: pointer; }
+.chat-action-btn:hover { background: #1A3A6B; color: white; }
+.chat-action-btn:hover.text-blue-400 { color: #60a5fa; }
+.chat-action-btn:hover.text-red-400 { color: #f87171; }
 
 /* ============================================================ */
 /*  11. TRANSITIONS UTILES
 /* ============================================================ */
 
-.transition-smooth {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.transition-bounce {
-  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.transition-fast {
-  transition: all 0.15s ease;
-}
+.transition-smooth { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.transition-bounce { transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+.transition-fast { transition: all 0.15s ease; }
 
 /* ============================================================ */
 /*  12. EFFETS DE VERRE (GLASSMORPHISM)
@@ -913,182 +491,90 @@ body {
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(26, 58, 107, 0.5);
 }
-
 .glass-light {
   background: rgba(13, 31, 60, 0.5);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(26, 58, 107, 0.3);
 }
-
-/* ============================================================ */
-/*  13. OMBRES PERSONNALISÉES
-/* ============================================================ */
-
-.shadow-gold {
-  box-shadow: 0 4px 20px rgba(240, 199, 94, 0.2);
-}
-
-.shadow-gold-lg {
-  box-shadow: 0 8px 30px rgba(240, 199, 94, 0.3);
-}
-
-.shadow-blue {
-  box-shadow: 0 4px 20px rgba(19, 89, 169, 0.2);
-}
-
-/* ============================================================ */
-/*  14. HOVER EFFECTS
-/* ============================================================ */
-
-.hover-lift {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
-
-.hover-glow:hover {
-  box-shadow: 0 0 15px rgba(240, 199, 94, 0.3);
-}
-
-/* ============================================================ */
-/*  15. RESPONSIVE UTILITIES
-/* ============================================================ */
-
-@media (max-width: 768px) {
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-}
-
-/* ============================================================ */
-/*  16. IMPRESSION
-/* ============================================================ */
-
-@media print {
-  .no-print {
-    display: none !important;
-  }
-  
-  body {
-    background: white !important;
-    color: black !important;
-  }
-}
-
-/* ============================================================ */
-/*  17. STYLES POUR LES INPUTS NUMBER
-/* ============================================================ */
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-/* ============================================================ */
-/*  18. STYLES POUR LA GALERIE
-/* ============================================================ */
-
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.transform-style-3d {
-  transform-style: preserve-3d;
-}
-
-.image-skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-.card-transition {
-  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.project-modal-content::-webkit-scrollbar {
-  width: 4px;
-}
-
-.project-modal-content::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.project-modal-content::-webkit-scrollbar-thumb {
-  background: #F0C75E;
-  border-radius: 2px;
-}
-/* ✅ Effet Glass - Forcé */
 .glass-effect {
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   background: rgba(13, 31, 60, 0.7) !important;
 }
+.light .glass-effect { background: rgba(255, 255, 255, 0.7) !important; }
 
-.light .glass-effect {
-  background: rgba(255, 255, 255, 0.7) !important;
+/* ============================================================ */
+/*  13. OMBRES PERSONNALISÉES
+/* ============================================================ */
+
+.shadow-gold { box-shadow: 0 4px 20px rgba(240, 199, 94, 0.2); }
+.shadow-gold-lg { box-shadow: 0 8px 30px rgba(240, 199, 94, 0.3); }
+.shadow-blue { box-shadow: 0 4px 20px rgba(19, 89, 169, 0.2); }
+
+/* ============================================================ */
+/*  14. HOVER EFFECTS
+/* ============================================================ */
+
+.hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.hover-lift:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); }
+.hover-glow:hover { box-shadow: 0 0 15px rgba(240, 199, 94, 0.3); }
+
+/* ============================================================ */
+/*  15. IMPRESSION
+/* ============================================================ */
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white !important; color: black !important; }
 }
+
 /* ============================================================ */
-/*  19. ANIMATIONS PREMIUM POUR LA LANDING PAGE (Ulysse DeZign)
+/*  16. STYLES POUR LES INPUTS NUMBER
 /* ============================================================ */
 
-/* --- Animation d'apparition fluide au scroll --- */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
+
+/* ============================================================ */
+/*  17. STYLES POUR LA GALERIE
+/* ============================================================ */
+
+.perspective-1000 { perspective: 1000px; }
+.transform-style-3d { transform-style: preserve-3d; }
+.image-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+.card-transition { transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+.project-modal-content::-webkit-scrollbar { width: 4px; }
+.project-modal-content::-webkit-scrollbar-track { background: transparent; }
+.project-modal-content::-webkit-scrollbar-thumb { background: #F0C75E; border-radius: 2px; }
+
+/* ============================================================ */
+/*  18. ANIMATIONS PREMIUM POUR LA LANDING PAGE (Ulysse DeZign)
+/* ============================================================ */
+
 .reveal-on-scroll { 
   opacity: 0; 
   transform: translateY(40px); 
-  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); /* Courbe de vitesse pro */
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
-.reveal-on-scroll.active { 
-  opacity: 1; 
-  transform: translateY(0); 
-}
+.reveal-on-scroll.active { opacity: 1; transform: translateY(0); }
 
-/* --- Animations pour la section Hero (Texte et Image) --- */
-@keyframes slideRight {
-  0% { opacity: 0; transform: translateX(-50px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
+@keyframes slideRight { 0% { opacity: 0; transform: translateX(-50px); } 100% { opacity: 1; transform: translateX(0); } }
+@keyframes slideLeft { 0% { opacity: 0; transform: translateX(50px); } 100% { opacity: 1; transform: translateX(0); } }
 
-@keyframes slideLeft {
-  0% { opacity: 0; transform: translateX(50px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
+.animate-slide-right { animation: slideRight 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-slide-left { animation: slideLeft 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-.animate-slide-right {
-  animation: slideRight 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
+.img-zoom-hover { overflow: hidden; }
+.img-zoom-hover img { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.img-zoom-hover:hover img { transform: scale(1.08); }
 
-.animate-slide-left {
-  animation: slideLeft 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* --- Effet de zoom lent et élégant sur les images --- */
-.img-zoom-hover {
-  overflow: hidden;
-}
-.img-zoom-hover img {
-  transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.img-zoom-hover:hover img {
-  transform: scale(1.08);
-}
-
-/* --- Effet Glassmorphism Premium pour la Navbar --- */
 .glass-navbar {
   background: rgba(13, 31, 60, 0.7);
   backdrop-filter: blur(20px) saturate(150%);
@@ -1096,7 +582,6 @@ input[type="number"] {
   border-bottom: 1px solid rgba(240, 199, 94, 0.1);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
-
 .glass-navbar-light {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px) saturate(150%);
@@ -1105,156 +590,37 @@ input[type="number"] {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
 
-/* --- Bouton Doré avec effet de brillance (Shine) --- */
-.btn-shine {
-  position: relative;
-  overflow: hidden;
-}
+.btn-shine { position: relative; overflow: hidden; }
 .btn-shine::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
   background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
   transform: skewX(-25deg);
   transition: all 0.7s ease;
 }
-.btn-shine:hover::after {
-  left: 200%;
-}
+.btn-shine:hover::after { left: 200%; }
 
-/* --- Scrollbar Globale (Thème Sombre & Doré) --- */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #071325; /* Fond très sombre */
-}
-::-webkit-scrollbar-thumb {
-  background: #F0C75E; /* Doré */
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #d4aa3a; /* Doré foncé */
-}
-
-/* --- Lissage de police pour un rendu Premium --- */
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-/* --- Délai pour les listes (Stagger effect) --- */
 .stagger-1 { transition-delay: 100ms; }
 .stagger-2 { transition-delay: 200ms; }
 .stagger-3 { transition-delay: 300ms; }
 .stagger-4 { transition-delay: 400ms; }
-/* Animation d'apparition fluide sans JavaScript */
-@keyframes fadeUp {
-  0% { 
-    opacity: 0; 
-    transform: translateY(30px); 
-  }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0); 
-  }
-}
 
-.animate-fade-up {
-  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0; /* Invisible avant le déclenchement */
-}
-/* Animation du rectangle Gold */
-@keyframes goldShimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-.animate-gold-shimmer {
-  background-size: 200% auto;
-  animation: goldShimmer 4s linear infinite;
-}
+@keyframes fadeUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+.animate-fade-up { animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
 
-/* Animation de balayage lumineux (Shine) pour le bouton */
-@keyframes shine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-.animate-shine {
-  animation: shine 1.5s ease-in-out;
-}
+@keyframes goldShimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+.animate-gold-shimmer { background-size: 200% auto; animation: goldShimmer 4s linear infinite; }
 
-/* Animations de fond et de halo */
-@keyframes slowZoom {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.1); }
-}
-.animate-slow-zoom {
-  animation: slowZoom 20s ease-in-out infinite alternate;
-}
+@keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+.animate-shine { animation: shine 1.5s ease-in-out; }
 
-@keyframes pulseSlow {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.1); }
-}
-.animate-pulse-slow {
-  animation: pulseSlow 8s ease-in-out infinite;
-}
-/* Cache la barre de défilement tout en gardant le scroll actif */
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-/* Animation de la flèche indicatrice sur mobile */
-@keyframes slideHint {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(5px); }
-}
-.animate-slide-hint {
-  animation: slideHint 1.5s ease-in-out infinite;
-}
-/* src/index.css */
+@keyframes slowZoom { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+.animate-slow-zoom { animation: slowZoom 20s ease-in-out infinite alternate; }
 
-/* 1. Active le défilement fluide natif sur tout le site */
-html {
-  scroll-behavior: smooth;
-  /* Optionnel : ajuste la vitesse du scroll natif (si supporté) */
-  scroll-padding-top: 80px; /* Évite que la navbar ne cache le haut des sections */
-}
+@keyframes pulseSlow { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.1); } }
+.animate-pulse-slow { animation: pulseSlow 8s ease-in-out infinite; }
 
-/* 2. Cache la barre de défilement tout en gardant le scroll actif */
-body::-webkit-scrollbar {
-  display: none;
-}
-body {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* 3. L'EFFET "SNAP" FLUIDE (le secret) */
-.snap-container {
-  height: 100vh;
-  overflow-y: auto;
-  scroll-snap-type: y proximity; /* 'proximity' est plus doux que 'mandatory' */
-  scroll-behavior: smooth;
-}
-
-.snap-section {
-  scroll-snap-align: start;
-  scroll-snap-stop: always; /* Oblige à s'arrêter sur la section, mais sans bloquer */
-}
-
-/* Cache la barre de défilement du conteneur snap */
-.snap-container::-webkit-scrollbar {
-  display: none;
-}
-.snap-container {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+@keyframes slideHint { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
+.animate-slide-hint { animation: slideHint 1.5s ease-in-out infinite; }

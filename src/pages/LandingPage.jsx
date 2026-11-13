@@ -1,29 +1,24 @@
 // src/pages/LandingPage.jsx
 import { useCallback, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 
 import HeroSection from '../components/sections/HeroSection';
-import StatsSection from '../components/sections/StatsSection';
 import CategoriesSection from '../components/sections/CategoriesSection';
-// 👇 ProductsSection a été retirée des imports
-import ContactSection from '../components/sections/ContactSection';
 import LuxuryMasonryGallery from '../components/portfolio/LuxuryMasonryGallery';
-
-import SectionWrapper from '../components/ui/SectionWrapper';
-import SectionHeader from '../components/ui/SectionHeader';
+import StatsSection from '../components/sections/StatsSection';
+import ContactSection from '../components/sections/ContactSection';
 
 // =====================================================
-// DONNÉES
+// 1. DONNÉES
 // =====================================================
-const SERVICES = [
-  { icon: 'design_services', title: 'Studio de Création', subtitle: 'Design sur-mesure', description: 'Graphistes experts pour vos supports de communication.', image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&h=400&fit=crop&q=80', points: ['Identité visuelle', 'Maquettes interactives', 'Retouches photo'] },
-  { icon: 'precision_manufacturing', title: 'Impression Pro', subtitle: 'Technologie de pointe', description: 'Machines dernier cri pour des résultats exceptionnels.', image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=400&fit=crop&q=80', points: ['UV direct', 'Offset numérique', 'Découpe laser'] },
-  { icon: 'event_available', title: 'Événementiel & PLV', subtitle: 'Communication terrain', description: 'Solutions d\'affichage pour vos événements.', image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&h=400&fit=crop&q=80', points: ['Stand d\'exposition', 'Kakémonos', 'Signalétique'] },
-  { icon: 'verified', title: 'Contrôle Qualité', subtitle: 'Excellence garantie', description: 'Contrôle rigoureux à chaque étape de production.', image: 'https://images.unsplash.com/photo-1581092335879-4b1faf40cdb5?w=600&h=400&fit=crop&q=80', points: ['Certification ISO', 'Contrôle couleur', 'Emballage sécurisé'] },
-  { icon: 'local_shipping', title: 'Logistique Express', subtitle: 'Livraison rapide', description: 'Livraison rapide dans toute la Tunisie.', image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=400&fit=crop&q=80', points: ['Livraison 24-72h', 'Suivi en ligne', 'Transport sécurisé'] }
+const SERVICES_LIST = [
+  { id: '01', title: 'Conception graphique', subtitle: 'Identité & Design', description: 'Création de logos, chartes graphiques et supports de communication sur-mesure pour affirmer votre image de marque.', icon: 'draw' },
+  { id: '02', title: 'Création de contenus', subtitle: 'Digital & Print', description: 'Élaboration de visuels percutants, rédaction web et gestion de vos réseaux sociaux pour engager votre audience.', icon: 'auto_awesome' },
+  { id: '03', title: 'Pose de vinyle', subtitle: 'Habillage & Signalétique', description: 'Application professionnelle de vinyles adhésifs sur véhicules, vitrines et murs intérieurs avec une finition parfaite.', icon: 'layers' },
+  { id: '04', title: 'Installation façade', subtitle: 'Enseignes & Grand Format', description: 'Conception et pose d\'enseignes lumineuses, lettres découpées et habillages de façades pour une visibilité maximale.', icon: 'storefront' },
+  { id: '05', title: 'Création plateforme', subtitle: 'Web & Landing Page', description: 'Développement de sites vitrines, e-commerce et landing pages optimisées pour la conversion et l\'expérience utilisateur.', icon: 'devices' },
 ];
 
 const PROCESS_STEPS = [
@@ -33,14 +28,10 @@ const PROCESS_STEPS = [
   { step: 4, title: 'Livraison', subtitle: 'On vous livre', description: 'Livraison rapide.' }
 ];
 
-const TESTIMONIALS = [
-  { id: 1, name: 'Ahmed Ben Salah', role: 'CEO, EventPro Tunisie', content: 'Ulysse DeZign a transformé nos événements avec des impressions d\'une qualité exceptionnelle.', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&q=80', rating: 5 },
-  { id: 2, name: 'Leila Trabelsi', role: 'Directrice Marketing', content: 'Les packagings réalisés ont donné à nos produits une image premium incomparable.', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face&q=80', rating: 5 },
-  { id: 3, name: 'Mohamed Ali Ben Hamida', role: 'Architecte d\'intérieur', content: 'La qualité des vinyles et des bâches est incomparable. Je recommande vivement !', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&q=80', rating: 5 }
-];
-
+// =====================================================
+// 2. COMPOSANT PRINCIPAL
+// =====================================================
 const LandingPage = () => {
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const scrollTo = useCallback((id) => {
@@ -53,210 +44,115 @@ const LandingPage = () => {
   }, []);
 
   useEffect(() => {
-    const container = document.querySelector('.snap-container');
+    // 👇 On écoute le scroll natif du navigateur (window)
     const handleScroll = () => {
-      if (container) setShowScrollTop(container.scrollTop > 500);
+      setShowScrollTop(window.scrollY > 500);
     };
     
-    if (container) container.addEventListener('scroll', handleScroll);
-    
-    const interval = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length);
-    }, 6000);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      if (container) container.removeEventListener('scroll', handleScroll);
-      clearInterval(interval);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#081b38] font-['Montserrat'] overflow-hidden">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#081b38] font-['Montserrat']">
       
       <Navbar scrollTo={scrollTo} />
 
-      <div className="snap-container">
+      {/* 👇 La div .snap-container a été supprimée. Le scroll est géré par le body. */}
+      
+      {/* 1. HERO */}
+      <div className="snap-section w-full">
+        <HeroSection scrollTo={scrollTo} />
+      </div>
+
+      {/* 2. CATÉGORIES */}
+      <div className="snap-section w-full">
+        <CategoriesSection />
+      </div>
+
+      {/* 3. PORTFOLIO */}
+      <div className="snap-section w-full" id="portfolio">
+        <LuxuryMasonryGallery />
+      </div>
+
+     {/* 4. SERVICES & PROCESSUS */}
+<div className="snap-section w-full">
+  <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#071325] py-20" id="services">
+    
+    <div className="absolute inset-0 bg-gradient-to-b from-[#071325] to-[#0A1628]" />
+    
+    <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 relative z-10 w-full h-full flex flex-col justify-center">
+      
+      {/* En-tête */}
+      <div className="text-center mb-16">
+        <p className="text-[10px] uppercase tracking-[0.4em] text-[#F0C75E] font-bold font-['Montserrat'] mb-4">
+          Notre Savoir-Faire
+        </p>
+        <h2 className="font-['Playfair_Display'] text-4xl md:text-5xl lg:text-6xl text-white font-bold tracking-tight">
+          Une expertise <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#F0C75E] to-[#d4aa3a]">complète</span>
+        </h2>
+      </div>
+
+      {/* Les 5 services (Taille maîtrisée, centrées) */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-6 w-full mb-20">
+        {SERVICES_LIST.map((service) => (
+          <div 
+            key={service.id} 
+            className="group relative flex flex-col justify-center p-6 border border-white/5 bg-white/[0.02] rounded-2xl hover:bg-white/[0.05] transition-all duration-500 overflow-hidden min-h-[180px]"
+          >
+            {/* Effet de ligne dorée qui monte du bas au survol */}
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#F0C75E] to-[#d4aa3a] transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
+            
+            <span className="text-[10px] font-bold text-[#F0C75E]/50 group-hover:text-[#F0C75E] mb-4 transition-colors duration-500">
+              {service.id}
+            </span>
+            <h3 className="font-['Playfair_Display'] text-lg md:text-xl text-white/80 group-hover:text-white font-bold leading-tight mb-4 transition-colors duration-500">
+              {service.title}
+            </h3>
+            <p className="text-[9px] uppercase tracking-widest text-[#F0C75E]/70 group-hover:text-[#F0C75E] font-semibold mt-auto transition-colors duration-500">
+              {service.subtitle}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Timeline Processus */}
+      <div className="w-full flex flex-col items-center">
+        <div className="flex items-center gap-4 mb-8">
+          <span className="w-12 h-px bg-[#F0C75E]/30"></span>
+          <p className="text-[10px] uppercase tracking-[0.3em] text-[#F0C75E] font-bold font-['Montserrat']">Notre Processus</p>
+          <span className="w-12 h-px bg-[#F0C75E]/30"></span>
+        </div>
         
-        {/* 1. HERO (Avec les 4 cartes produits swipables) */}
-        <div className="snap-section w-full">
-          <HeroSection scrollTo={scrollTo} />
-        </div>
-
-        {/* 2. CATÉGORIES */}
-        <div className="snap-section w-full">
-          <CategoriesSection />
-        </div>
-
-        {/* 👇 LA SECTION PRODUITS A ÉTÉ SUPPRIMÉE ICI */}
-
-        {/* 3. PORTFOLIO */}
-        <div className="snap-section w-full" id="portfolio">
-          <LuxuryMasonryGallery />
-        </div>
-
-        {/* 4. SERVICES */}
-        <div className="snap-section w-full">
-          <SectionWrapper id="services">
-            <SectionHeader
-              eyebrow="Notre Expertise"
-              title="Nos"
-              highlight="Services"
-              description="Des solutions complètes et sur-mesure pour tous vos besoins d'impression."
-            />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {SERVICES.map((service, idx) => (
-                <div key={idx} className="group relative bg-white/5 backdrop-blur-md rounded-[1.5rem] p-3 transition-all duration-700 hover:-translate-y-2 hover:bg-white/10 border border-white/10 hover:border-[#F0C75E]/30 hover:shadow-[0_20px_50px_-12px_rgba(240,199,94,0.15)] flex flex-col">
-                  <div className="relative h-48 sm:h-56 rounded-[1rem] overflow-hidden bg-[#0D1F3C]">
-                    <img src={service.image} alt={service.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0D1F3C]/90 via-[#0D1F3C]/20 to-transparent" />
-                    <div className="absolute bottom-4 left-4 w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-[#F0C75E] transition-colors duration-500">
-                      <span className="material-symbols-outlined text-white group-hover:text-[#0D1F3C] text-2xl transition-colors duration-500">{service.icon}</span>
-                    </div>
-                  </div>
-                  <div className="p-5 flex flex-col flex-grow">
-                    <p className="text-[9px] font-bold uppercase tracking-widest text-[#F0C75E] mb-2">{service.subtitle || 'Service Premium'}</p>
-                    <h3 className="font-['Playfair_Display'] text-xl text-white font-bold leading-tight mb-3">{service.title}</h3>
-                    <p className="text-sm text-white/60 leading-relaxed font-['Montserrat'] font-light">{service.description}</p>
-                    {service.points && (
-                      <div className="flex flex-wrap gap-1 mt-4">
-                        {service.points.map((point, i) => (
-                          <span key={i} className="text-[9px] bg-white/5 text-white/70 px-2 py-1 rounded-full border border-white/5">✓ {point}</span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </SectionWrapper>
-        </div>
-
-        {/* 5. PROCESSUS */}
-        <div className="snap-section w-full">
-          <SectionWrapper>
-            <SectionHeader
-              eyebrow="Méthodologie"
-              title="Notre"
-              highlight="Processus"
-              description="De l'idée à la réalisation en quelques étapes."
-              align="center"
-            />
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 relative">
-              <div className="hidden md:block absolute top-6 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-[#F0C75E]/30 to-transparent z-0" />
-              {PROCESS_STEPS.map((step, idx) => (
-                <div key={idx} className="relative text-center group z-10">
-                  <div className="w-12 h-12 mx-auto rounded-full bg-[#0D1F3C] border border-[#F0C75E]/50 flex items-center justify-center text-[#F0C75E] font-['Playfair_Display'] text-lg font-bold shadow-[0_0_15px_-3px_rgba(240,199,94,0.3)] group-hover:scale-110 group-hover:bg-[#F0C75E] group-hover:text-[#0D1F3C] transition-all duration-500">
-                    {step.step}
-                  </div>
-                  <div className="mt-4">
-                    <span className="text-[9px] text-[#F0C75E] font-bold uppercase tracking-widest opacity-80">{step.subtitle}</span>
-                    <h3 className="font-['Playfair_Display'] text-base md:text-lg text-white font-semibold mt-1 group-hover:text-[#F0C75E] transition-colors duration-300">{step.title}</h3>
-                    <p className="text-[11px] md:text-xs text-white/50 mt-1 font-['Montserrat'] leading-relaxed max-w-[150px] mx-auto">{step.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </SectionWrapper>
-        </div>
-
-        {/* 6. AVIS */}
-        <div className="snap-section w-full">
-          <SectionWrapper id="testimonials">
-            <SectionHeader
-              eyebrow="Témoignages"
-              title="Ce qu'ils pensent de"
-              highlight="nous"
-            />
-            <div className="relative max-w-3xl mx-auto">
-              <div className="relative overflow-hidden min-h-[250px] md:min-h-[220px]">
-                {TESTIMONIALS.map((testimonial, idx) => (
-                  <div key={testimonial.id} className={`absolute inset-0 transition-all duration-700 ease-in-out transform flex items-center justify-center ${idx === activeTestimonial ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 -translate-x-full pointer-events-none z-0'}`}>
-                    <div className="bg-white/5 backdrop-blur-xl rounded-[2rem] p-8 md:p-12 border border-white/10 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] w-full relative">
-                      <div className="absolute top-6 right-8 text-[#F0C75E]/10">
-                        <span className="material-symbols-outlined text-6xl">format_quote</span>
-                      </div>
-                      <div className="flex flex-col md:flex-row items-center md:items-start gap-6 relative z-10">
-                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-[#F0C75E] flex-shrink-0 shadow-[0_0_20px_rgba(240,199,94,0.3)]">
-                          <img src={testimonial.image} alt={testimonial.name} className="w-full h-full object-cover" />
-                        </div>
-                        <div className="text-center md:text-left flex-1">
-                          <div className="flex justify-center md:justify-start gap-1 text-[#F0C75E] mb-2">
-                            {[...Array(testimonial.rating)].map((_, i) => (
-                              <span key={i} className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                            ))}
-                          </div>
-                          <p className="text-lg md:text-xl text-white/90 font-['Playfair_Display'] italic leading-relaxed mb-4">"{testimonial.content}"</p>
-                          <div>
-                            <h4 className="font-['Playfair_Display'] text-lg text-white font-bold">{testimonial.name}</h4>
-                            <p className="text-xs text-[#F0C75E] font-['Montserrat'] uppercase tracking-wider mt-1">{testimonial.role}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+        <div className="relative w-full max-w-5xl flex items-center justify-between">
+          <div className="absolute top-5 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-[#F0C75E]/30 to-transparent z-0" />
+          {PROCESS_STEPS.map((step, idx) => (
+            <div key={idx} className="relative z-10 flex flex-col items-center text-center group">
+              <div className="w-10 h-10 rounded-full bg-[#071325] border border-[#F0C75E]/40 flex items-center justify-center text-[#F0C75E] font-['Playfair_Display'] text-sm font-bold mb-4 group-hover:scale-110 group-hover:bg-[#F0C75E] group-hover:text-[#071325] transition-all duration-500 shadow-[0_0_15px_-3px_rgba(240,199,94,0.3)]">
+                {step.step}
               </div>
-              <div className="flex justify-center gap-3 mt-8">
-                {TESTIMONIALS.map((_, idx) => (
-                  <button key={idx} onClick={() => setActiveTestimonial(idx)} className={`transition-all duration-500 rounded-full ${idx === activeTestimonial ? 'bg-[#F0C75E] w-10 h-2 shadow-[0_0_10px_rgba(240,199,94,0.5)]' : 'bg-white/20 w-2 h-2 hover:bg-white/40'}`} />
-                ))}
-              </div>
+              <span className="text-[8px] font-bold text-[#F0C75E] uppercase tracking-widest mb-1">{step.subtitle}</span>
+              <h4 className="font-['Playfair_Display'] text-base text-white font-semibold">{step.title}</h4>
             </div>
-          </SectionWrapper>
+          ))}
         </div>
+      </div>
 
-        {/* 7. AVANTAGES */}
-        <div className="snap-section w-full">
-          <section className="py-20 md:py-28 bg-white h-full flex flex-col justify-center">
-            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 text-center">
-              {[
-                { icon: 'high_quality', title: 'Résolution Extra HD', desc: 'Une finesse de détail inégalée pour toutes vos impressions.' },
-                { icon: 'shield', title: 'Durée de Vie Prolongée', desc: 'Encres polymérisées aux UV pour une résistance optimale.' },
-                { icon: 'content_cut', title: 'Découpe Laser Précise', desc: 'Contours nets et formes complexes avec précision chirurgicale.' },
-                { icon: 'rocket_launch', title: 'Production Express', desc: 'Expédition sous 48h pour vos projets prioritaires.' }
-              ].map((item, idx) => (
-                <div key={idx} className="flex flex-col items-center">
-                  <div className="w-16 h-16 rounded-full border border-[#F0C75E]/20 flex items-center justify-center mb-3">
-                    <span className="material-symbols-outlined text-[#F0C75E] text-3xl">{item.icon}</span>
-                  </div>
-                  <h3 className="font-['Playfair_Display'] text-lg text-[#1A3A6B] font-semibold">{item.title}</h3>
-                  <p className="text-xs sm:text-sm text-[#4A6A8A] font-['Montserrat'] font-light mt-1">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-        </div>
+    </div>
+  </section>
+</div>
 
-        {/* 8. NEWSLETTER */}
-        <div className="snap-section w-full">
-          <SectionWrapper>
-            <SectionHeader
-              eyebrow="Ne manquez rien"
-              title="Rejoignez le"
-              highlight="Cercle Privé"
-              description="Inscrivez-vous pour recevoir nos invitations exclusives, nos conseils de design et nos offres privilèges."
-              align="center"
-            />
-            <form className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto" onSubmit={(e) => e.preventDefault()}>
-              <input type="email" placeholder="Votre adresse email" className="flex-1 px-6 py-4 rounded-full bg-[#0D1F3C]/50 backdrop-blur-md border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-[#F0C75E] focus:ring-1 focus:ring-[#F0C75E]/50 font-['Montserrat'] text-sm transition-all duration-300" />
-              <button type="submit" className="group relative px-8 py-4 rounded-full bg-gradient-to-r from-[#F0C75E] to-[#d4aa3a] text-[#0D1F3C] font-bold font-['Montserrat'] text-sm uppercase tracking-widest overflow-hidden shadow-[0_0_30px_-10px_rgba(240,199,94,0.6)] hover:shadow-[0_0_40px_-10px_rgba(240,199,94,0.8)] transition-all duration-500 hover:-translate-y-0.5">
-                <span className="relative z-10">S'inscrire</span>
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-shine" />
-              </button>
-            </form>
-          </SectionWrapper>
-        </div>
+      {/* 5. STATS & AVIS */}
+      <div className="snap-section w-full">
+        <StatsSection />
+      </div>
 
-        {/* 9. STATS */}
-        <div className="snap-section w-full">
-          <StatsSection />
-        </div>
-
-        {/* 10. CONTACT */}
-        <div className="snap-section w-full">
-          <ContactSection />
-        </div>
-
+      {/* 6. CONTACT */}
+      <div className="snap-section w-full">
+        <ContactSection />
       </div>
 
       <Footer scrollTo={scrollTo} />
@@ -269,8 +165,7 @@ const LandingPage = () => {
 
       {showScrollTop && (
         <button onClick={() => {
-          const container = document.querySelector('.snap-container');
-          if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }} className="group fixed bottom-24 right-6 z-50 bg-white/10 backdrop-blur-md border border-white/20 text-[#F0C75E] p-3 rounded-full shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] hover:bg-[#F0C75E] hover:text-[#0D1F3C] hover:border-[#F0C75E] hover:scale-110 hover:shadow-[0_0_20px_-5px_rgba(240,199,94,0.6)] transition-all duration-500 flex items-center justify-center">
           <span className="material-symbols-outlined text-2xl font-bold group-hover:-translate-y-1 transition-transform">arrow_upward</span>
         </button>

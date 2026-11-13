@@ -1,61 +1,106 @@
 // src/components/sections/StatsSection.jsx
+import { useState, useEffect } from 'react';
+
 const STATS = [
-  { number: '500+', label: 'Projets Réalisés', icon: 'check_circle' },
-  { number: '98%', label: 'Clients Satisfaits', icon: 'sentiment_very_satisfied' },
-  { number: '48h', label: 'Délai de Production', icon: 'schedule' },
-  { number: '4.9/5', label: 'Note Moyenne', icon: 'star' }
+  { number: '500+', label: 'Projets Réalisés' },
+  { number: '98%', label: 'Clients Satisfaits' },
+  { number: '48h', label: 'Délai de Production' },
+  { number: '4.9/5', label: 'Note Moyenne' }
+];
+
+const TESTIMONIALS = [
+  { id: 1, name: 'Ahmed Ben Salah', role: 'CEO, EventPro Tunisie', content: 'Ulysse DeZign a transformé nos événements avec des impressions d\'une qualité exceptionnelle.', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&q=80', rating: 5 },
+  { id: 2, name: 'Leila Trabelsi', role: 'Directrice Marketing', content: 'Les packagings réalisés ont donné à nos produits une image premium incomparable.', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face&q=80', rating: 5 },
+  { id: 3, name: 'Mohamed Ali Ben Hamida', role: 'Architecte d\'intérieur', content: 'La qualité des vinyles et des bâches est incomparable. Je recommande vivement !', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&q=80', rating: 5 }
 ];
 
 const StatsSection = () => {
-  return (
-    // ✅ py-20 md:py-28 : identique à toutes les autres sections
-    <section className="py-20 md:py-28 relative overflow-hidden bg-[#071325]">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#071325] via-[#0D1F3C] to-[#0A1628]" />
-      <div className="absolute -top-[20%] -right-[10%] w-[500px] h-[500px] bg-[#F0C75E]/10 rounded-full blur-[120px] mix-blend-screen pointer-events-none" />
-      <div className="absolute -bottom-[20%] -left-[10%] w-[500px] h-[500px] bg-[#1E7AC4]/10 rounded-full blur-[100px] mix-blend-screen pointer-events-none" />
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(#F0C75E 1px, transparent 1px), linear-gradient(90deg, #F0C75E 1px, transparent 1px)`,
-          backgroundSize: '80px 80px'
-        }}
-      />
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
-      {/* ✅ Conteneur identique : max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 */}
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    // On remplace min-h-screen par py-20 pour que la section prenne juste la place nécessaire
+    <section className="relative py-20 overflow-hidden bg-[#071325]" id="stats-and-testimonials">
+      
+      <div className="absolute inset-0 bg-gradient-to-b from-[#071325] to-[#0A1628]" />
+
+      <div className="max-w-[1280px] mx-auto px-6 md:px-12 relative z-10 w-full">
         
-        {/* En-tête identique aux autres sections */}
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 sm:mb-16">
-          <div className="text-center md:text-left">
-            <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
-              <span className="w-8 md:w-12 h-px bg-[#F0C75E]"></span>
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#F0C75E] font-bold font-['Montserrat']">Chiffres Clés</span>
-            </div>
-            <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl md:text-5xl text-white font-bold tracking-tight leading-tight">
-              Notre <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F0C75E] via-[#fce8aa] to-[#d4aa3a]">Impact</span>
-            </h2>
-            <p className="text-sm sm:text-base text-white/60 mt-4 font-['Montserrat'] font-light max-w-xl mx-auto md:mx-0">
-              Des chiffres qui parlent d'eux-mêmes et qui reflètent notre engagement.
-            </p>
+        {/* 1. STATS (Compact) */}
+        <div className="w-full flex flex-col items-center mb-16">
+          <div className="flex items-center gap-4 mb-10">
+            <span className="w-8 h-px bg-[#F0C75E]/30"></span>
+            <span className="text-[10px] uppercase tracking-[0.4em] text-[#F0C75E] font-bold font-['Montserrat']">Notre Impact</span>
+            <span className="w-8 h-px bg-[#F0C75E]/30"></span>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-8 w-full">
+            {STATS.map((stat, idx) => (
+              <div key={idx} className="flex flex-col items-center text-center group">
+                <p className="font-['Playfair_Display'] text-4xl md:text-5xl text-white font-bold mb-2 group-hover:text-[#F0C75E] transition-colors duration-500">
+                  {stat.number}
+                </p>
+                <p className="text-[9px] md:text-[10px] text-white/40 font-['Montserrat'] uppercase tracking-[0.2em] font-semibold">
+                  {stat.label}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Grille des stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-          {STATS.map((stat, idx) => (
-            <div
-              key={idx}
-              className="group relative flex flex-col items-center justify-center p-6 md:p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:border-[#F0C75E]/50 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(240,199,94,0.3)]"
-            >
-              <div className="w-12 h-12 rounded-full bg-[#F0C75E]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
-                <span className="material-symbols-outlined text-2xl md:text-3xl text-[#F0C75E]">{stat.icon}</span>
+        {/* Séparateur discret entre stats et avis */}
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-16" />
+
+        {/* 2. TÉMOIGNAGES (Compact) */}
+        <div className="w-full flex flex-col items-center">
+          <div className="flex items-center gap-4 mb-10">
+            <span className="w-8 h-px bg-[#F0C75E]/30"></span>
+            <span className="text-[10px] uppercase tracking-[0.4em] text-[#F0C75E] font-bold font-['Montserrat']">Témoignages</span>
+            <span className="w-8 h-px bg-[#F0C75E]/30"></span>
+          </div>
+
+          <div className="relative w-full max-w-4xl min-h-[180px]">
+            {TESTIMONIALS.map((testimonial, idx) => (
+              <div 
+                key={testimonial.id} 
+                className={`absolute inset-0 transition-all duration-700 ease-in-out transform flex flex-col items-center justify-center text-center ${
+                  idx === activeTestimonial ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 -translate-x-full pointer-events-none z-0'
+                }`}
+              >
+                <p className="text-xl md:text-2xl lg:text-3xl text-white/80 font-['Playfair_Display'] italic leading-relaxed mb-6 max-w-3xl">
+                  "{testimonial.content}"
+                </p>
+                
+                <div className="flex items-center gap-4">
+                  <img src={testimonial.image} alt={testimonial.name} className="w-10 h-10 rounded-full object-cover grayscale opacity-50" />
+                  <div className="text-left">
+                    <h4 className="font-['Montserrat'] text-sm text-white font-bold">{testimonial.name}</h4>
+                    <p className="text-[10px] text-white/40 uppercase tracking-widest">{testimonial.role}</p>
+                  </div>
+                </div>
               </div>
-              <p className="font-['Playfair_Display'] text-3xl md:text-5xl text-white font-bold tracking-tight group-hover:text-[#F0C75E] transition-colors duration-500">{stat.number}</p>
-              <div className="w-0 h-0.5 bg-[#F0C75E] my-3 group-hover:w-12 transition-all duration-500" />
-              <p className="text-[10px] md:text-xs text-white/60 font-['Montserrat'] uppercase tracking-[0.2em] font-semibold text-center mt-1">{stat.label}</p>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          <div className="flex justify-center gap-2 mt-8">
+            {TESTIMONIALS.map((_, idx) => (
+              <button 
+                key={idx} 
+                onClick={() => setActiveTestimonial(idx)} 
+                className={`transition-all duration-500 rounded-full h-1 ${
+                  idx === activeTestimonial ? 'bg-[#F0C75E] w-8' : 'bg-white/20 w-1.5 hover:bg-white/40'
+                }`} 
+              />
+            ))}
+          </div>
         </div>
+
       </div>
     </section>
   );

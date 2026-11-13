@@ -6,7 +6,7 @@ import stickersImg from '../../assets/stickers.jpg';
 import uvImg from '../../assets/uv.webp';
 import grfImg from '../../assets/grandformat.jpg';
 import pckImg from '../../assets/packaging.webp';
-import bgImage from '../../assets/background website 02.jpg';
+import bgImage from '../../assets/background website 02.png';
 
 const CATEGORIES = [
   { id: 'stickers', num: '01', title: 'Stickers & Découpes', icon: 'content_cut', image: stickersImg, link: '/boutique?categorie=stickers' },
